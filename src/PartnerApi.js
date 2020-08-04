@@ -1,8 +1,7 @@
 import AbstractApi from "./AbstractApi";
 import Fetcher from "./util/Fetcher";
-import FormData from 'formdata-node';
 
-export default class PartnerApi extends AbstractApi {
+export class PartnerApi extends AbstractApi {
   /**
    * @param {string} endpoint
    * @param {string} agSign

@@ -1,8 +1,7 @@
 import {describe, it, before} from "mocha";
 import {expect} from 'chai';
 import {createFetcherStub} from "./util";
-import PartnerApi, {PartnerApiExceptionThrowingFetcher} from "../src/PartnerApi";
-import Fetcher from "../src/util/Fetcher";
+import {PartnerApi} from "../src/PartnerApi";
 
 const ENDPOINT = 'ENDPOINT';
 const BR_AGENT_USER_ID = 'BR_AGENT_USER_ID';

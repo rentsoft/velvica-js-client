@@ -1,6 +1,5 @@
 import AbstractApi from "./AbstractApi";
 import Fetcher from "./util/Fetcher";
-import FormData from 'formdata-node';
 
 /**
  * @enum {string}
@@ -24,7 +23,7 @@ export const VPSLogFilter = Object.freeze({
   COUNT_ALL: 'all'
 });
 
-export default class ControlPanelApi extends AbstractApi {
+export class ControlPanelApi extends AbstractApi {
   /**
    * @param {string} endpoint
    * @param {string} agSign
