@@ -85,7 +85,15 @@ export class ControlPanelApi extends AbstractApi {
       throw new Error(`Action change ${stateChange} is not allowed!`);
     }
 
-    return this.fetch(stateChange, {method: 'POST'});
+    const mapping = {
+      [VPSStateChange.SOFT_REBOOT]: 'reboot/soft',
+      [VPSStateChange.HARD_REBOOT]: 'reboot/hard',
+      [VPSStateChange.SHUTDOWN]: 'shutdown',
+      [VPSStateChange.TURN_ON]: 'start',
+      [VPSStateChange.RESCUE_LEAVE]: 'rescue/leave'
+    };
+
+    return this.fetch(mapping[stateChange], {method: 'POST'});
   }
 
   async startRescue(imageId) {

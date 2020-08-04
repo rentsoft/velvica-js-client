@@ -54,10 +54,10 @@ describe('ControlPanelApi', function () {
       action: () => api.changeState('UNKNOWN'),
       error: 'Action change UNKNOWN is not allowed!'
     },
-    'changeState with known state change': {
+    'changeState with known mapped state change': {
       action: () => api.changeState(VPSStateChange.TURN_ON),
       expected: {
-        url: '[E]/subscription/[S]/turnOn?[A]',
+        url: '[E]/subscription/[S]/start?[A]',
         params: {method: 'POST'}
       }
     },
