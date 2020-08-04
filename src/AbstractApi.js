@@ -58,7 +58,7 @@ export default class AbstractApi {
    */
   /**
    * @callback ErrorHandlerCallback
-   * @param {number} statusCode
+   * @param {Response} response
    * @param {object} responseBody
    */
 }

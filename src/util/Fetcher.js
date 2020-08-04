@@ -8,7 +8,7 @@ export default class Fetcher
     const fetchResult = await fetch(...params);
     const responseJson = await fetchResult.json();
     if (this.errorHandler !== undefined && !fetchResult.ok) {
-      this.errorHandler(fetchResult.status, responseJson);
+      this.errorHandler(fetchResult, responseJson);
     }
     return responseJson;
   }

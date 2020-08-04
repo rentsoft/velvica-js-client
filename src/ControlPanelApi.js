@@ -53,7 +53,7 @@ export class ControlPanelApi extends AbstractApi {
   /**
    * @callback ControlPanelApiErrorHandlerCallback
    *
-   * @param {number} statusCode
+   * @param {Response} response
    * @param {({detail}|any)} responseBody
    */
 

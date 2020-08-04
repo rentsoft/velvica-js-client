@@ -42,7 +42,7 @@ export class PartnerApi extends AbstractApi {
   /**
    * @callback PartnerApiErrorHandlerCallback
    *
-   * @param {number} statusCode
+   * @param {Response} response
    * @param {({error, detail}|any)} responseBody
    */
 
