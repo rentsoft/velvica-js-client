@@ -24,6 +24,31 @@ export class PartnerApi extends AbstractApi {
     return `users/${this.brAgentUserUuid}/${action}?sales_channel_id=${this.brAgentId}`;
   }
 
+  /**
+   * This function is here only to override its JSDoc.
+   *
+   * @param {(PartnerApiPerformerCallback|PerformerCallback)} performer
+   * @param {(PartnerApiErrorHandlerCallback|ErrorHandlerCallback)} errorHandler
+   * @returns {Promise<Response>}
+   */
+  withErrorHandling(performer, errorHandler) {
+    return super.withErrorHandling(performer, errorHandler);
+  }
+
+  /**
+   * @callback PartnerApiPerformerCallback
+   * @param {PartnerApi} api
+   */
+  /**
+   * @callback PartnerApiErrorHandlerCallback
+   *
+   * @param {number} statusCode
+   * @param {({error, detail}|any)} responseBody
+   */
+
+  /**
+   * @returns {Promise<Response>}
+   */
   async fetchSubscriptions() {
     return await this.fetch('subscriptions', {method: 'GET'});
   }

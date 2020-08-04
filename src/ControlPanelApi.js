@@ -28,12 +28,34 @@ export class ControlPanelApi extends AbstractApi {
    * @param {string} endpoint
    * @param {string} agSign
    * @param {string} subscriptionId
-   * @param fetcher
+   * @param [Fetcher] fetcher
    */
   constructor({endpoint, agSign, subscriptionId}, fetcher = new Fetcher()) {
     super({endpoint, agSign}, fetcher);
     this.subscriptionId = subscriptionId;
   }
+
+  /**
+   * This function is here only to override its JSDoc.
+   *
+   * @param {(ControlPanelApiPerformerCallback|PerformerCallback)} performer
+   * @param {(ControlPanelApiErrorHandlerCallback|ErrorHandlerCallback)} errorHandler
+   * @returns {Promise<Response>}
+   */
+  withErrorHandling(performer, errorHandler) {
+    return super.withErrorHandling(performer, errorHandler);
+  }
+
+  /**
+   * @callback ControlPanelApiPerformerCallback
+   * @param {ControlPanelApi} api
+   */
+  /**
+   * @callback ControlPanelApiErrorHandlerCallback
+   *
+   * @param {number} statusCode
+   * @param {({detail}|any)} responseBody
+   */
 
   /**
    * @protected
