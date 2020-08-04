@@ -2,8 +2,7 @@
   "name": "velvica-js-client",
   "version": "1.0.0",
   "description": "Velvica API implementation written in JS, both for internal and external usage.",
-  "main": "dist/index.js",
-  "exports": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack src/**.js",
     "test": "mocha --require @babel/register tests/*.js --timeout 100"
