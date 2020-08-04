@@ -1,12 +1,17 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'velvica-js-client': './src/index.js'
+  },
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
-    library: 'Velvica',
+    libraryTarget: 'umd'
+  },
+  resolve: {
+    extensions: ['.js'],
   },
   module: {
     rules: [
