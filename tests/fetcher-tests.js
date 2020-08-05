@@ -48,18 +48,16 @@ describe('Fetcher', function () {
       fetcher = new Fetcher();
 
       fetcher.setErrorHandler(
-        (statusCode, {error, detail}) => {
-          const errorInstance = new Error(detail);
-          errorInstance.code = statusCode;
-          errorInstance.name = error;
-          errorInstance.message = detail;
+        (response, {error, detail}) => {
+          const errorInstance = new Error(`${response.status}: ${error}`);
+          errorInstance.detail = detail;
           throw errorInstance;
         }
       );
 
       fetcher.setConnectionFailedHandler(
         (error) => {
-          throw new Error(`Handled: ${error}`);
+          throw new Error(`Connection error: ${error}`);
         }
       );
     }
@@ -78,19 +76,20 @@ describe('Fetcher', function () {
     setTimeout(() => expect(hadError).to.be.false, 50);
   });
 
-  it('should handle erroneous responses', function () {
+  it('should handle erroneous responses', function (done) {
     fetcher.fetch(ERROR_ROUTE).catch(err => {
       // It was previously set up above to throw exceptions like that.
-      expect(err.code).to.equal(ERROR_CODE);
-      expect(err.name).to.equal(ERROR_NAME);
-      expect(err.message).to.equal(ERROR_DETAIL);
+      expect(err.message).to.equal(`${ERROR_CODE}: ${ERROR_NAME}`);
+      expect(err.detail).to.equal(ERROR_DETAIL);
+      done();
     });
   });
 
-  it('should handle connection failures', function () {
+  it('should handle connection failures', function (done) {
     fetcher.fetch(CONNECTION_FAILURE_ROUTE).catch(err => {
       // "Handled: " is added above. Just for test reasons.
-      expect(err.message).to.equal(`Handled: ${CONNECTION_FAILURE_ERROR}`);
+      expect(err.message).to.equal(`Connection error: ${CONNECTION_FAILURE_ERROR}`);
+      done();
     });
   });
 

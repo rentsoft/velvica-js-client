@@ -6,13 +6,12 @@ export default class Fetcher
   }
 
   async fetch(...params) {
+    let fetchResult;
+    let responseJson;
+
     try {
-      const fetchResult = await fetch(...params);
-      const responseJson = await fetchResult.json();
-      if (this.errorHandler !== undefined && !fetchResult.ok) {
-        this.errorHandler(fetchResult, responseJson);
-      }
-      return responseJson;
+      fetchResult = await fetch(...params);
+      responseJson = await fetchResult.json();
     } catch (err) {
       if (this.connectionFailedHandler !== undefined) {
         this.connectionFailedHandler(err);
@@ -20,6 +19,12 @@ export default class Fetcher
         throw err;
       }
     }
+
+    if (this.errorHandler !== undefined && !fetchResult.ok) {
+      this.errorHandler(fetchResult, responseJson);
+    }
+
+    return responseJson;
   }
 
   /**
