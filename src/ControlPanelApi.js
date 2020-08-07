@@ -76,20 +76,37 @@ export class ControlPanelApi extends AbstractApi {
   }
 
   /**
-   * @param {string} imageUUID
-   * @param [string] sshKey
+   * @param {VPSRebuildOptions} options
    * @returns {Promise<Response>}
    */
-  async rebuild({imageUUID, sshKey}) {
-    if (!imageUUID) {
+  async rebuild(options) {
+    options = {
+      ...options
+    };
+
+    if (!options.imageUUID) {
       throw new Error('Cannot rebuild without imageUUID specified.');
     }
 
     const formData = new FormData();
-    formData.append('image_uuid', imageUUID);
-    if (sshKey !== undefined) {
-      formData.append('ssh_key', sshKey);
+    formData.append('image_uuid', options.imageUUID);
+    if (options.sshKeyIds !== undefined) {
+      formData.append('ssh_keys', options.sshKeyIds.join(','))
     }
+
+    if (options.newSshKey !== undefined) {
+      formData.append('new_ssh_key_name', options.newSshKey.name);
+      formData.append('new_ssh_key_value', options.newSshKey.value);
+    }
+
+    if (options.password !== undefined) {
+      formData.append('password', options.password);
+    }
+
+    if (options.allowPasswordLogin !== undefined) {
+      formData.append('allow_password_login', options.allowPasswordLogin ? 'true' : 'false');
+    }
+
     return this.fetch(
       'rebuild',
       {
@@ -142,4 +159,14 @@ export class ControlPanelApi extends AbstractApi {
 
     return this.fetch(`console/logs/${logsCount}`, {method: 'GET'});
   }
+
+  /**
+   * @typedef VPSRebuildOptions
+   * @type {object}
+   * @property {string} imageUUID
+   * @property {string[]} [sshKeyIds]
+   * @property {{name: string, value: string}} [newSshKey]
+   * @property {string} [password]
+   * @property {boolean} [allowPasswordLogin]
+   */
 };
