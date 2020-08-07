@@ -54,7 +54,7 @@ export class PartnerApi extends AbstractApi {
    */
 
   /**
-   * @param object filters
+   * @param [object] filters
    * @returns {Promise<Response>}
    */
   async fetchSubscriptions(filters) {
