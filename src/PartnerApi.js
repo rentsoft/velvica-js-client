@@ -79,7 +79,7 @@ export class PartnerApi extends AbstractApi {
   async updateSshKey(sshKeyId, name) {
     return await this.fetch(`ssh_keys/${sshKeyId}`, {
       method: 'PUT',
-      body: JSON.stringify({'name': name})
+      body: JSON.stringify({name})
     });
   }
 
