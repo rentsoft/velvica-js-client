@@ -18,10 +18,17 @@ export class PartnerApi extends AbstractApi {
   /**
    * @protected
    * @param {string} action
+   * @param {object} queryParams
    * @returns {string}
    */
-  buildRequestPath(action) {
-    return `users/${this.brAgentUserUuid}/${action}?sales_channel_id=${this.brAgentId}`;
+  buildRequestPath(action, urlParams) {
+    let query = '';
+    if (urlParams) {
+      query = '&' + Object.keys(urlParams)
+        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(urlParams[k]))
+        .join('&');
+    }
+    return `users/${this.brAgentUserUuid}/${action}?sales_channel_id=${this.brAgentId}${query}`;
   }
 
   /**
@@ -47,10 +54,11 @@ export class PartnerApi extends AbstractApi {
    */
 
   /**
+   * @param object filters
    * @returns {Promise<Response>}
    */
-  async fetchSubscriptions() {
-    return await this.fetch('subscriptions', {method: 'GET'});
+  async fetchSubscriptions(filters) {
+    return await this.fetch('subscriptions', {method: 'GET'}, filters);
   }
 
   async fetchSshKeys() {
@@ -69,12 +77,9 @@ export class PartnerApi extends AbstractApi {
   }
 
   async updateSshKey(sshKeyId, name) {
-    const formData = new FormData();
-    formData.append('name', name);
-
     return await this.fetch(`ssh_keys/${sshKeyId}`, {
       method: 'PUT',
-      body: formData
+      body: JSON.stringify({'name': name})
     });
   }
 

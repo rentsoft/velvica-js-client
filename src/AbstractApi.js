@@ -14,10 +14,11 @@ export default class AbstractApi {
 
   /**
    * @protected
+   * @param {object} urlParams
    * @param {string} action
    * @returns {string}
    */
-  buildRequestPath(action) {
+  buildRequestPath(action, urlParams) {
     return action;
   }
 
@@ -38,11 +39,12 @@ export default class AbstractApi {
    *
    * @param action
    * @param args
+   * @param urlParams
    * @returns {Promise<Response>}
    * @protected
    */
-  async fetch(action, args) {
-    const requestPath = `${this.endpoint}/${this.buildRequestPath(action)}`;
+  async fetch(action, args, urlParams) {
+    const requestPath = `${this.endpoint}/${this.buildRequestPath(action, urlParams)}`;
     const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
     const urlPostfix = this.agSign + (isDev ? '&debug=1' : '');
 

@@ -13,10 +13,17 @@ describe('PartnerApi', function () {
   let api = null;
 
   const tests = {
-    'fetchInfo': {
+    'fetchSubscriptions': {
       action: () => api.fetchSubscriptions(),
       expected: {
         url: '[E]/users/[BU]/subscriptions?sales_channel_id=[BA]&[A]',
+        params: {method: 'GET'}
+      }
+    },
+    'fetchOnlyVps': {
+      action: () => api.fetchSubscriptions({'product_type': 'vps'}),
+      expected: {
+        url: '[E]/users/[BU]/subscriptions?sales_channel_id=[BA]&product_type=vps&[A]',
         params: {method: 'GET'}
       }
     },
@@ -46,9 +53,7 @@ describe('PartnerApi', function () {
         url: '[E]/users/[BU]/ssh_keys/12345?sales_channel_id=[BA]&[A]',
         params: {
           method: 'PUT',
-          body: {
-            name: 'new name',
-          }
+          body: "{\"name\":\"new name\"}"
         }
       }
     },

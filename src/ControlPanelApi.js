@@ -60,9 +60,10 @@ export class ControlPanelApi extends AbstractApi {
   /**
    * @protected
    * @param {string} action
+   * @param {object} urlParams
    * @returns {string}
    */
-  buildRequestPath(action) {
+  buildRequestPath(action, urlParams) {
     return `subscription/${this.subscriptionId}/${action}`;
   }
 
