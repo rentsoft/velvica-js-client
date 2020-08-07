@@ -40,13 +40,44 @@ describe('ControlPanelApi', function () {
         }
       }
     },
-    'rebuild with imageUUID and sshKey': {
-      action: () => api.rebuild({imageUUID: 'foo', sshKey: 'bar'}),
+    'rebuild with imageUUID and sshKeyIds': {
+      action: () => api.rebuild({imageUUID: 'foo', sshKeyIds: ['123', '456']}),
       expected: {
         url: '[E]/subscription/[S]/rebuild?[A]',
         params: {
           method: 'POST',
-          body: {image_uuid: 'foo', ssh_key: 'bar'}
+          body: {
+            image_uuid: 'foo',
+            ssh_keys: '123,456'
+          }
+        }
+      }
+    },
+    'rebuild with imageUUID and new SSH key': {
+      action: () => api.rebuild({imageUUID: 'foo', newSshKey: {name: 'name', value: 'value'}}),
+      expected: {
+        url: '[E]/subscription/[S]/rebuild?[A]',
+        params: {
+          method: 'POST',
+          body: {
+            image_uuid: 'foo',
+            new_ssh_key_name: 'name',
+            new_ssh_key_value: 'value'
+          }
+        }
+      }
+    },
+    'rebuild with imageUUID and password-specific stuff': {
+      action: () => api.rebuild({imageUUID: 'foo', password: 'pswd', allowPasswordLogin: false}),
+      expected: {
+        url: '[E]/subscription/[S]/rebuild?[A]',
+        params: {
+          method: 'POST',
+          body: {
+            image_uuid: 'foo',
+            password: 'pswd',
+            allow_password_login: 'false'
+          }
         }
       }
     },
