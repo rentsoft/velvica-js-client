@@ -18,7 +18,7 @@ export class PartnerApi extends AbstractApi {
   /**
    * @protected
    * @param {string} action
-   * @param {object} queryParams
+   * @param {object} urlParams
    * @returns {string}
    */
   buildRequestPath(action, urlParams) {
@@ -54,7 +54,7 @@ export class PartnerApi extends AbstractApi {
    */
 
   /**
-   * @param [object] filters
+   * @param {object} [filters]
    * @returns {Promise<Response>}
    */
   async fetchSubscriptions(filters) {

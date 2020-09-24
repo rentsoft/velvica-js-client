@@ -61,20 +61,6 @@ describe('ControlPanelApi', function () {
         params: {method: 'POST'}
       }
     },
-    'startRescue': {
-      action: () => api.startRescue('abc'),
-      expected: {
-        url: '[E]/subscription/[S]/rescue/start?image_id=abc&[A]',
-        params: {method: 'POST'}
-      }
-    },
-    'leaveRescue': {
-      action: () => api.leaveRescue(),
-      expected: {
-        url: '[E]/subscription/[S]/rescue/leave?[A]',
-        params: {method: 'POST'}
-      }
-    },
     'fetchConsoleUrl': {
       action: () => api.fetchConsoleUrl(),
       expected: {
