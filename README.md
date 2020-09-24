@@ -11,13 +11,3 @@
     "velvica-js-client": "git+https://github.com/rentsoft/velvica-js-client.git"
   }
 ```
-
-## Компиляция
-
-Перед тем, как сделать push, запустите:
-
-```
-npm run build
-```
-
-Это нужно для того, чтобы обновить содержимое директории `dist`.
