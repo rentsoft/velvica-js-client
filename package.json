@@ -7,6 +7,11 @@
     "build": "webpack src/**.js",
     "test": "mocha --require @babel/register tests/*.js --timeout 100"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test && npm run build && git add dist"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rentsoft/velvica-js-client.git"
@@ -29,6 +34,7 @@
     "mocha": "^8.1.0",
     "node-fetch": "^2.6.0",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "husky": "^4.3.0"
   }
 }
