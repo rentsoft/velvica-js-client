@@ -10,7 +10,6 @@ export const VPSStateChange = Object.freeze({
   SHUTDOWN: 'shutdown',
   SOFT_REBOOT: 'softReboot',
   HARD_REBOOT: 'hardReboot',
-  RESCUE_LEAVE: 'rescueLeave'
 });
 
 /**
@@ -28,7 +27,7 @@ export class ControlPanelApi extends AbstractApi {
    * @param {string} endpoint
    * @param {string} agSign
    * @param {string} subscriptionId
-   * @param [Fetcher] fetcher
+   * @param {Fetcher} [fetcher]
    */
   constructor({endpoint, agSign, subscriptionId}, fetcher = new Fetcher()) {
     super({endpoint, agSign}, fetcher);
@@ -129,19 +128,10 @@ export class ControlPanelApi extends AbstractApi {
       [VPSStateChange.SOFT_REBOOT]: 'reboot/soft',
       [VPSStateChange.HARD_REBOOT]: 'reboot/hard',
       [VPSStateChange.SHUTDOWN]: 'shutdown',
-      [VPSStateChange.TURN_ON]: 'start',
-      [VPSStateChange.RESCUE_LEAVE]: 'rescue/leave'
+      [VPSStateChange.TURN_ON]: 'start'
     };
 
     return this.fetch(mapping[stateChange], {method: 'POST'});
-  }
-
-  async startRescue(imageId) {
-    return this.fetch(`rescue/start?image_id=${imageId}`, {method: 'POST'});
-  }
-
-  async leaveRescue() {
-    return this.fetch('rescue/leave', {method: 'POST'});
   }
 
   async fetchConsoleUrl() {

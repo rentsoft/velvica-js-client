@@ -1,6 +1,6 @@
 import {describe, it, before} from "mocha";
 import {expect} from 'chai';
-import {ControlPanelApi, VPSLogFilter, VPSStateChange} from "../src/ControlPanelApi";
+import {ControlPanelApi, VPSLogFilter, VPSStateChange} from "../src";
 import {createFetcherStub} from "./util";
 
 const ENDPOINT = 'ENDPOINT';
@@ -89,20 +89,6 @@ describe('ControlPanelApi', function () {
       action: () => api.changeState(VPSStateChange.TURN_ON),
       expected: {
         url: '[E]/subscription/[S]/start?[A]',
-        params: {method: 'POST'}
-      }
-    },
-    'startRescue': {
-      action: () => api.startRescue('abc'),
-      expected: {
-        url: '[E]/subscription/[S]/rescue/start?image_id=abc&[A]',
-        params: {method: 'POST'}
-      }
-    },
-    'leaveRescue': {
-      action: () => api.leaveRescue(),
-      expected: {
-        url: '[E]/subscription/[S]/rescue/leave?[A]',
         params: {method: 'POST'}
       }
     },

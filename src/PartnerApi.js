@@ -18,7 +18,7 @@ export class PartnerApi extends AbstractApi {
   /**
    * @protected
    * @param {string} action
-   * @param {object} queryParams
+   * @param {object} urlParams
    * @returns {string}
    */
   buildRequestPath(action, urlParams) {
