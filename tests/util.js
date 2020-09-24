@@ -6,7 +6,10 @@ export const createFetcherStub = () => {
     async fetch(url, params) {
       if (params.body instanceof FormData) {
         // Easier testing.
-        params.body = Object.fromEntries(params.body);
+        params.body = [...params.body].reduce((prevObject, [key, value]) => {
+          prevObject[key] = value;
+          return prevObject;
+        }, {});
       }
 
       this.result = {

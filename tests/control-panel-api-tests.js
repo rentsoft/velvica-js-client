@@ -1,6 +1,6 @@
 import {describe, it, before} from "mocha";
 import {expect} from 'chai';
-import {ControlPanelApi, VPSLogFilter, VPSStateChange} from "../src/ControlPanelApi";
+import {ControlPanelApi, VPSLogFilter, VPSStateChange} from "../src";
 import {createFetcherStub} from "./util";
 
 const ENDPOINT = 'ENDPOINT';
