@@ -22,7 +22,7 @@ describe('PartnerApi', function () {
     'fetchOnlyVps': {
       action: () => api.fetchSubscriptions({'product_type': 'vps'}),
       expected: {
-        url: '[E]/users/[BU]/subscriptions?sales_channel_id=[BA]&product_type=vps&[A]',
+        url: '[E]/users/[BU]/subscriptions?sales_channel_id=[BA]&[A]&product_type=vps',
         params: {method: 'GET'}
       }
     },

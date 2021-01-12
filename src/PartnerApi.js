@@ -10,7 +10,8 @@ export class PartnerApi extends AbstractApi {
    * @param fetcher
    */
   constructor({endpoint, agSign, brAgentUserUuid, brAgentId}, fetcher = new Fetcher()) {
-    super({endpoint, agSign}, fetcher);
+    super(endpoint, fetcher);
+    this.agSign = agSign;
     this.brAgentUserUuid = brAgentUserUuid;
     this.brAgentId = brAgentId;
   }
@@ -18,17 +19,10 @@ export class PartnerApi extends AbstractApi {
   /**
    * @protected
    * @param {string} action
-   * @param {object} urlParams
    * @returns {string}
    */
-  buildRequestPath(action, urlParams) {
-    let query = '';
-    if (urlParams) {
-      query = '&' + Object.keys(urlParams)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(urlParams[k]))
-        .join('&');
-    }
-    return `users/${this.brAgentUserUuid}/${action}?sales_channel_id=${this.brAgentId}${query}`;
+  buildRequestPath(action) {
+    return `users/${this.brAgentUserUuid}/${action}?sales_channel_id=${this.brAgentId}&${this.agSign}`;
   }
 
   /**
