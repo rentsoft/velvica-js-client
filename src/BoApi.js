@@ -1,12 +1,7 @@
 import AbstractApi from "./AbstractApi";
 import Fetcher from "./util/Fetcher";
 import {Options} from "./index";
-
-// todo transform enums into enums and export them
-const AgentTypes = ['orchestrator', 'reseller', 'tenant', 'partner', 'provider'];
-const ServerStatuses = ['active', 'archived', 'new', 'deleted'];
-const DiscountStatuses = ['active', 'scheduled', 'deleted'];
-const DiscountStatusesForUser = ['used', 'available_personal', 'available_general'];
+import {AgentTypes, DiscountStatuses, DiscountStatusesForUser, PersonalCodeStatuses, ServerStatuses} from "./enum";
 
 export class BoApi extends AbstractApi {
   /**
@@ -25,7 +20,7 @@ export class BoApi extends AbstractApi {
    * @returns {string}
    */
   buildRequestPath(action) {
-    return `api/${action}?SESSID=${this.sessionRestore}`;
+    return `${action}?SESSID=${this.sessionRestore}`;
   }
 
   /**
@@ -39,6 +34,10 @@ export class BoApi extends AbstractApi {
     return super.withErrorHandling(performer, errorHandler);
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchBrAgents(options) {
     const schema = {
       search: Options.stringValue(),
@@ -52,6 +51,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchSoftGroups(options) {
     const schema = {
       search: Options.stringValue(),
@@ -64,6 +67,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchDevelopers(options) {
     const schema = {
       search: Options.stringValue(),
@@ -76,6 +83,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchBrSofts(options) {
     const schema = {
       search: Options.stringValue(),
@@ -89,6 +100,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchSofts(options) {
     const schema = {
       search: Options.stringValue(),
@@ -102,6 +117,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchServices(options) {
     const schema = {
       search: Options.stringValue(),
@@ -116,6 +135,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchSubscriptions(options) {
     const schema = {
       uuid: Options.stringValue(),
@@ -128,6 +151,10 @@ export class BoApi extends AbstractApi {
     );
   }
 
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchDiscounts(options) {
     const schema = {
       search: Options.stringValue(),
@@ -144,46 +171,71 @@ export class BoApi extends AbstractApi {
     );
   }
 
-  // todo type formData
-  // todo test
+  /**
+   * @param {object} formData
+   * @returns {Promise<Response>}
+   */
   async postDiscount(formData) {
     return this.fetch('discount', {method: 'POST', body: formData});
   }
 
-  // todo types
-  // todo test
+  /**
+   * @param {string} id
+   * @param {object} formData
+   * @returns {Promise<Response>}
+   */
   async patchDiscount(id, formData) {
-    return this.fetch('discount/${id}', {method: 'PATCH', body: formData});
+    return this.fetch(`discount/${id}`, {method: 'PATCH', body: formData});
   }
 
-  // todo type
-  // todo test
+  /**
+   * @param {string} id
+   * @returns {Promise<Response>}
+   */
   async getDiscount(id) {
     return this.fetch(`discount/${id}`, {method: 'GET'});
   }
 
-  // todo discount_id, search, status
-  // todo test
+  /**
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
   async fetchPersonalCodes(options) {
-    return this.fetch('personal_code/list', {method: 'GET'}, options);
+    const schema = {
+      discountId: Options.stringValue(),
+      search: Options.stringValue(),
+      status: Options.enumValue(PersonalCodeStatuses),
+    };
+
+    return this.fetch(
+      'personal_code/list',
+      {method: 'GET'},
+      Options.create(options,  schema)
+    );
   }
 
-  // todo type
-  // todo test
+  /**
+   * @param {string} id
+   * @returns {Promise<Response>}
+   */
   async deletePersonalCode(id) {
     return this.fetch(`personal_code/${id}`, {method: 'DELETE'});
   }
 
-  // todo type
-  // todo test
+  /**
+   * @param {string} id
+   * @returns {Promise<Response>}
+   */
   async suspendPersonalCode(id) {
     return this.fetch(`personal_code/${id}/suspend`, {method: 'POST'});
   }
 
-  // todo type
-  // todo test
+  /**
+   * @param {object} formData
+   * @returns {Promise<Response>}
+   */
   async postPersonalCode(formData) {
-    return this.fetch(`discount`, {method: 'POST', body: formData});
+    return this.fetch('personal_code', {method: 'POST', body: formData});
   }
 
   /**

@@ -53,7 +53,7 @@ export default class Options {
   /**
    * Helper method to reduce imports and improve readability.
    *
-   * @param {array} allowedValues
+   * @param {object} allowedValues
    * @returns {EnumSchema}
    */
   static enumValue(allowedValues) {
@@ -96,8 +96,7 @@ export class AbstractSchema {
   }
 }
 
-export class AnySchema extends AbstractSchema {
-}
+export class AnySchema extends AbstractSchema {}
 
 export class StringSchema extends AbstractSchema {
   validate(value) {
@@ -106,12 +105,15 @@ export class StringSchema extends AbstractSchema {
 }
 
 export class EnumSchema extends AbstractSchema {
+  /**
+   * @param {object} allowedValues - enum
+   */
   constructor(allowedValues) {
     super();
     this.allowedValues = allowedValues;
   }
 
   validate(value) {
-    return this.allowedValues.includes(value);
+    return Object.values(this.allowedValues).includes(value);
   }
 }
