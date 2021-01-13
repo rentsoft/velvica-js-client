@@ -12,7 +12,7 @@ export default class Fetcher {
     params = {
       ...params || {},
       headers: {
-        ...params?.headers || {},
+        ...(params && params.headers) ? params.headers : {},
         Accept: 'application/json'
       },
     };
