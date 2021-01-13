@@ -26,7 +26,10 @@ describe('Fetcher', function () {
         SUCCESS_ROUTE,
         {
           status: 200,
-          body: SUCCESS_BODY,
+          body: SUCCESS_BODY
+        },
+        {
+          headers: { Accept: 'application/json' }
         }
       );
 
@@ -35,6 +38,9 @@ describe('Fetcher', function () {
         {
           status: ERROR_CODE,
           body: {error: ERROR_NAME, detail: ERROR_DETAIL},
+        },
+        {
+          headers: { Accept: 'application/json' }
         }
       );
 
@@ -42,6 +48,9 @@ describe('Fetcher', function () {
         CONNECTION_FAILURE_ROUTE,
         {
           throws: CONNECTION_FAILURE_ERROR
+        },
+        {
+          headers: { Accept: 'application/json' }
         }
       );
 
