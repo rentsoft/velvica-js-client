@@ -46,7 +46,7 @@ export default class AbstractApi {
     let query = '';
     if (urlParams) {
       query = Object.keys(urlParams)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(urlParams[k]))
+        .map((data, param) => encodeURIComponent(param) + '=' + encodeURIComponent(data))
         .join('&');
     }
 
