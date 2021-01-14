@@ -3,14 +3,14 @@ export default class Options {
    * Transforms options with camelCase keys into valid snake_case object,
    * additionally performing validations according to schema.
    *
-   * @param {Object.<string, any>} options
-   * @param {Object.<string, AbstractSchema>} schema
+   * @param {Object.<string, any>} [options]
+   * @param {Object.<string, AbstractSchema>} [schema]
    */
-  static create(options, schema) {
+  static create(options = {}, schema = {}) {
     const result = {};
 
     for (const [key, propertySchema] of Object.entries(schema)) {
-      if (!(key in options)) {
+      if (!(key in options) || typeof options[key] === 'undefined') {
         if (!propertySchema.isRequired()) {
           continue;
         }

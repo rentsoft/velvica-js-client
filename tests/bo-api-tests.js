@@ -175,6 +175,27 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'fetchPersonalCodes (success, no options)': {
+      action: () => {
+        return api.fetchPersonalCodes();
+      },
+      expected: {
+        url: 'ENDPOINT/personal_code/list?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'fetchPersonalCodes (undefined option)': {
+      action: () => {
+        return api.fetchPersonalCodes({
+          discountId: undefined,
+          search: '123'
+        });
+      },
+      expected: {
+        url: 'ENDPOINT/personal_code/list?SESSID=SESSION&search=123',
+        params: {method: 'GET'}
+      }
+    },
     'deletePersonalCode': {
       action: () => api.deletePersonalCode('100000000000000006'),
       expected: {

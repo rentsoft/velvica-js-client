@@ -35,7 +35,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchBrAgents(options) {
@@ -52,7 +52,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchSoftGroups(options) {
@@ -68,7 +68,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchDevelopers(options) {
@@ -84,7 +84,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchBrSofts(options) {
@@ -101,7 +101,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchSofts(options) {
@@ -118,7 +118,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchServices(options) {
@@ -136,7 +136,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchSubscriptions(options) {
@@ -152,7 +152,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchDiscounts(options) {
@@ -197,7 +197,7 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-   * @param {object} options
+   * @param {object} [options]
    * @returns {Promise<Response>}
    */
   async fetchPersonalCodes(options) {
