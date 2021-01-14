@@ -75,8 +75,7 @@ export default class AbstractApi {
       return path;
     }
 
-    const requestPathContainsGetParams = path.includes('?');
-    const glueSign = requestPathContainsGetParams ? '&' : '?';
+    const glueSign = path.includes('?') ? '&' : '?';
 
     return `${path}${glueSign}${params}`;
   }
