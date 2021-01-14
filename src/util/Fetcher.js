@@ -1,16 +1,24 @@
-export default class Fetcher
-{
+export default class Fetcher {
   constructor() {
     this.errorHandler = undefined;
     this.connectionFailedHandler = undefined;
   }
 
-  async fetch(...params) {
+  async fetch(url, params) {
     let fetchResult;
     let responseJson;
 
+    // Override Accept header.
+    params = {
+      ...params || {},
+      headers: {
+        ...(params && params.headers) ? params.headers : {},
+        Accept: 'application/json'
+      },
+    };
+
     try {
-      fetchResult = await fetch(...params);
+      fetchResult = await fetch(url, params);
       responseJson = await fetchResult.json();
     } catch (err) {
       if (this.connectionFailedHandler !== undefined) {

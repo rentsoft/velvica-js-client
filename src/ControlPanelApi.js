@@ -30,7 +30,8 @@ export class ControlPanelApi extends AbstractApi {
    * @param {Fetcher} [fetcher]
    */
   constructor({endpoint, agSign, subscriptionId}, fetcher = new Fetcher()) {
-    super({endpoint, agSign}, fetcher);
+    super(endpoint, fetcher);
+    this.agSign = agSign;
     this.subscriptionId = subscriptionId;
   }
 
@@ -59,11 +60,10 @@ export class ControlPanelApi extends AbstractApi {
   /**
    * @protected
    * @param {string} action
-   * @param {object} urlParams
    * @returns {string}
    */
-  buildRequestPath(action, urlParams) {
-    return `subscription/${this.subscriptionId}/${action}`;
+  buildRequestPath(action) {
+    return `subscription/${this.subscriptionId}/${action}?${this.agSign}`;
   }
 
   async fetchInfo() {

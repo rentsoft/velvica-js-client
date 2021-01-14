@@ -3,22 +3,19 @@ import Fetcher from "./util/Fetcher";
 export default class AbstractApi {
   /**
    * @param {string} endpoint
-   * @param {string} agSign - Ag query string used for signing the URL
    * @param {Fetcher} fetcher
    */
-  constructor({ endpoint, agSign }, fetcher = new Fetcher()) {
+  constructor(endpoint, fetcher = new Fetcher()) {
     this.endpoint = endpoint;
-    this.agSign = agSign;
     this.fetcher = fetcher;
   }
 
   /**
    * @protected
-   * @param {object} urlParams
    * @param {string} action
    * @returns {string}
    */
-  buildRequestPath(action, urlParams) {
+  buildRequestPath(action) {
     return action;
   }
 
@@ -44,14 +41,43 @@ export default class AbstractApi {
    * @protected
    */
   async fetch(action, args, urlParams) {
-    const requestPath = `${this.endpoint}/${this.buildRequestPath(action, urlParams)}`;
+    const requestPath = this.buildRequestPath(action);
+
+    let query = '';
+    if (urlParams) {
+      query = Object.keys(urlParams)
+        .map((data, param) => encodeURIComponent(param) + '=' + encodeURIComponent(data))
+        .join('&');
+    }
+
+    const path = this.gluePathAndParams(`${this.endpoint}/${requestPath}`, query);
     const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-    const urlPostfix = this.agSign + (isDev ? '&debug=1' : '');
+    const debugPostfix = isDev ? '&debug=1' : '';
 
-    const requestPathContainsGetParams = requestPath.includes('?');
-    const glueSign = requestPathContainsGetParams ? '&' : '?';
+    return await this.fetcher.fetch(
+      this.gluePathAndParams(path, debugPostfix),
+      args
+    );
+  }
 
-    return await this.fetcher.fetch(`${requestPath}${glueSign}${urlPostfix}`, args);
+  /**
+   * Glues path and params, such as:
+   * - `foo` + `bar=1` = `foo?bar=1`
+   * - `foo` + empty string = `foo`
+   * - `foo?bar=1` + `abc=2 = `foo?bar=1&abc=2`
+   *
+   * @param path
+   * @param params
+   * @returns {string|*}
+   */
+  gluePathAndParams(path, params) {
+    if (params === '') {
+      return path;
+    }
+
+    const glueSign = path.includes('?') ? '&' : '?';
+
+    return `${path}${glueSign}${params}`;
   }
 
   /**
