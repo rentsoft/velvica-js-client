@@ -35,6 +35,19 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * Adds pagination-specific schema options. Returns altered schema.
+   *
+   * @param {object} schema - original schema
+   * @returns {*&{p: NumericSchema}}
+   */
+  withPagination(schema) {
+    return {
+      ...schema,
+      p: Options.numericValue(),
+    };
+  }
+
+  /**
    * @param {object} [options]
    * @returns {Promise<Response>}
    */
@@ -47,7 +60,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'br_agent/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -63,7 +76,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'soft_group/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -79,7 +92,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'developer/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -96,7 +109,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'br_soft/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -113,7 +126,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'soft/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -131,7 +144,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'service/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -147,7 +160,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'subscription/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -167,7 +180,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'discount/list',
       {method: 'GET'},
-      Options.create(options, schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 
@@ -210,7 +223,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       'personal_code/list',
       {method: 'GET'},
-      Options.create(options,  schema)
+      Options.create(options, this.withPagination(schema))
     );
   }
 

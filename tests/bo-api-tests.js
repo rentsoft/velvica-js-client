@@ -24,10 +24,14 @@ describe('BoApi', function () {
       action: () => api.fetchBrAgents({ search: '123', agentType: '???' }),
       error: 'Failed to validate: agentType is invalid.'
     },
+    'fetchBrAgents (error 2)': {
+      action: () => api.fetchBrAgents({ search: '123', p: 'not number' }),
+      error: 'Failed to validate: p is invalid.'
+    },
     'fetchBrAgents (success)': {
-      action: () => api.fetchBrAgents({ search: '123', agentType: AgentTypes.PROVIDER }),
+      action: () => api.fetchBrAgents({ search: '123', agentType: AgentTypes.PROVIDER, p: 5 }),
       expected: {
-        url: 'ENDPOINT/br_agent/list?SESSID=SESSION&search=123&agent_type=provider',
+        url: 'ENDPOINT/br_agent/list?SESSID=SESSION&search=123&agent_type=provider&p=5',
         params: {method: 'GET'}
       }
     },

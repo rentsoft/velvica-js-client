@@ -53,6 +53,15 @@ export default class Options {
   /**
    * Helper method to reduce imports and improve readability.
    *
+   * @returns {NumericSchema}
+   */
+  static numericValue() {
+    return new NumericSchema();
+  }
+
+  /**
+   * Helper method to reduce imports and improve readability.
+   *
    * @param {object} allowedValues
    * @returns {EnumSchema}
    */
@@ -101,6 +110,12 @@ export class AnySchema extends AbstractSchema {}
 export class StringSchema extends AbstractSchema {
   validate(value) {
     return typeof value === 'string';
+  }
+}
+
+export class NumericSchema extends AbstractSchema {
+  validate(value) {
+    return value.toString().match(/\d+/) !== null;
   }
 }
 
