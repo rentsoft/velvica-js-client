@@ -226,6 +226,17 @@ describe('BoApi', function () {
         }
       }
     },
+    'fetchUnapprovedSubscriptions (error)': {
+      action: () => api.fetchUnapprovedSubscriptions({ search: null }),
+      error: 'Failed to validate: search is invalid.'
+    },
+    'fetchUnapprovedSubscriptions (success)': {
+      action: () => api.fetchUnapprovedSubscriptions({ search: '123', brAgentId: '100000000000000001' }),
+      expected: {
+        url: 'ENDPOINT/subscription_unapproved/list?SESSID=SESSION&search=123&br_agent_id=100000000000000001',
+        params: {method: 'GET'}
+      }
+    },
   };
 
   before(() => {
