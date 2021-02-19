@@ -118,7 +118,7 @@ describe('BoApi', function () {
     'fetchDiscounts (success)': {
       action: () => {
         return api.fetchDiscounts({
-          search: '1',
+          promocodeOrName: '1',
           uuidOrEmail: '2',
           status: DiscountStatuses.ACTIVE,
           statusForUser: DiscountStatusesForUser.USED,
@@ -126,7 +126,7 @@ describe('BoApi', function () {
         });
       },
       expected: {
-        url: 'ENDPOINT/discount/list?SESSID=SESSION&search=1&uuid_or_email=2' +
+        url: 'ENDPOINT/discount/list?SESSID=SESSION&promocode_or_name=1&uuid_or_email=2' +
           '&status=active&status_for_user=used&soft_group=group',
         params: {method: 'GET'}
       }

@@ -187,7 +187,7 @@ export class BoApi extends AbstractApi {
    */
   async fetchDiscounts(options) {
     const schema = {
-      search: Options.stringValue(),
+      promocodeOrName: Options.stringValue(),
       uuidOrEmail: Options.stringValue(),
       status: Options.enumValue(DiscountStatuses),
       statusForUser: Options.enumValue(DiscountStatusesForUser),
