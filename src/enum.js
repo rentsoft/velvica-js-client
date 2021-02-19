@@ -19,7 +19,8 @@ export const ServerStatuses = {
 export const DiscountStatuses = {
   ACTIVE: 'active',
   SCHEDULED: 'scheduled',
-  DELETED: 'deleted',
+  EXPIRED: 'expired',
+  DISABLED: 'disabled',
 };
 
 /** @enum */
