@@ -68,6 +68,23 @@ export class BoApi extends AbstractApi {
    * @param {object} [options]
    * @returns {Promise<Response>}
    */
+  async fetchUnapprovedSubscriptions(options) {
+    const schema = {
+      search: Options.stringValue(),
+      brAgentId: Options.stringValue(),
+    };
+
+    return this.fetch(
+      'subscription_unapproved/list',
+      {method: 'GET'},
+      Options.create(options, this.withPagination(schema))
+    );
+  }
+
+  /**
+   * @param {object} [options]
+   * @returns {Promise<Response>}
+   */
   async fetchSoftGroups(options) {
     const schema = {
       search: Options.stringValue(),
