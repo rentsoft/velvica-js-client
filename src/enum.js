@@ -1,4 +1,10 @@
 /** @enum */
+export const ToggleValues = {
+  ON: '1',
+  OFF: null,
+};
+
+/** @enum */
 export const AgentTypes = {
   ORCHESTRATOR: 'orchestrator',
   RESELLER: 'reseller',

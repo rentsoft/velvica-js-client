@@ -11,6 +11,7 @@ import {
   VPSStateChange
 } from "../src";
 import {createFetcherStub} from "./util";
+import {ToggleValues} from "../src/enum";
 
 const ENDPOINT = 'ENDPOINT';
 const SESSID = 'SESSION';
@@ -121,13 +122,34 @@ describe('BoApi', function () {
           promocodeOrName: '1',
           uuidOrEmail: '2',
           status: DiscountStatuses.ACTIVE,
-          statusForUser: DiscountStatusesForUser.USED,
           softGroup: 'group'
         });
       },
       expected: {
-        url: 'ENDPOINT/discount/list?SESSID=SESSION&promocode_or_name=1&uuid_or_email=2' +
-          '&status=active&status_for_user=used&soft_group=group',
+        url: 'ENDPOINT/discount/list?SESSID=SESSION&promocode_or_name=1' +
+          '&uuid_or_email=2&status=active&soft_group=group',
+        params: {method: 'GET'}
+      }
+    },
+    'fetchDiscountsForUser (error)': {
+      action: () => api.fetchDiscountsForUser(1, { statusForUser: 'random' }),
+      error: 'Failed to validate: statusForUser is invalid.'
+    },
+    'fetchDiscountsForUser (error 2)': {
+      action: () => api.fetchDiscountsForUser(2, { showDisabled: true }),
+      error: 'Failed to validate: showDisabled is invalid.'
+    },
+    'fetchDiscountsForUser (success)': {
+      action: () => {
+        return api.fetchDiscountsForUser(3, {
+          promocodeOrName: 'hey',
+          statusForUser: DiscountStatusesForUser.AVAILABLE_GENERAL,
+          showDisabled: ToggleValues.ON,
+        });
+      },
+      expected: {
+        url: 'ENDPOINT/user/3/discount/list?SESSID=SESSION&promocode_or_name=hey' +
+          '&status_for_user=available_general&show_disabled=1',
         params: {method: 'GET'}
       }
     },
