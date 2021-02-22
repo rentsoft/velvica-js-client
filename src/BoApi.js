@@ -216,7 +216,7 @@ export class BoApi extends AbstractApi {
     const schema = {
       promocodeOrName: Options.stringValue(),
       statusForUser: Options.enumValue(DiscountStatusesForUser),
-      hideDisabled: Options.enumValue(ToggleValues),
+      showDisabled: Options.enumValue(ToggleValues),
     }
 
     return this.fetch(
