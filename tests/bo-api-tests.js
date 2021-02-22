@@ -136,20 +136,20 @@ describe('BoApi', function () {
       error: 'Failed to validate: statusForUser is invalid.'
     },
     'fetchDiscountsForUser (error 2)': {
-      action: () => api.fetchDiscountsForUser(2, { showDisabled: true }),
-      error: 'Failed to validate: showDisabled is invalid.'
+      action: () => api.fetchDiscountsForUser(2, { hideDisabled: true }),
+      error: 'Failed to validate: hideDisabled is invalid.'
     },
     'fetchDiscountsForUser (success)': {
       action: () => {
         return api.fetchDiscountsForUser(3, {
           promocodeOrName: 'hey',
           statusForUser: DiscountStatusesForUser.AVAILABLE_GENERAL,
-          showDisabled: ToggleValues.ON,
+          hideDisabled: ToggleValues.ON,
         });
       },
       expected: {
         url: 'ENDPOINT/user/3/discount/list?SESSID=SESSION&promocode_or_name=hey' +
-          '&status_for_user=available_general&show_disabled=1',
+          '&status_for_user=available_general&hide_disabled=1',
         params: {method: 'GET'}
       }
     },
