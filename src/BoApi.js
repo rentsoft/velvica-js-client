@@ -217,7 +217,7 @@ export class BoApi extends AbstractApi {
       promocodeOrName: Options.stringValue(),
       statusForUser: Options.enumValue(DiscountStatusesForUser),
       showDisabled: Options.enumValue(ToggleValues),
-    }
+    };
 
     return this.fetch(
       `user/${userId}/discount/list`,
