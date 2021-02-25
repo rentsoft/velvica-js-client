@@ -1,7 +1,14 @@
 import AbstractApi from "./AbstractApi";
 import Fetcher from "./util/Fetcher";
 import {Options} from "./index";
-import {AgentTypes, DiscountStatuses, DiscountStatusesForUser, PersonalCodeStatuses, ServerStatuses} from "./enum";
+import {
+  AgentTypes,
+  DiscountStatuses,
+  DiscountStatusesForUser,
+  PersonalCodeStatuses,
+  ServerStatuses,
+  ToggleValues
+} from "./enum";
 
 export class BoApi extends AbstractApi {
   /**
@@ -190,12 +197,30 @@ export class BoApi extends AbstractApi {
       promocodeOrName: Options.stringValue(),
       uuidOrEmail: Options.stringValue(),
       status: Options.enumValue(DiscountStatuses),
-      statusForUser: Options.enumValue(DiscountStatusesForUser),
       softGroup: Options.stringValue(),
     };
 
     return this.fetch(
       'discount/list',
+      {method: 'GET'},
+      Options.create(options, this.withPagination(schema))
+    );
+  }
+
+  /**
+   * @param {string} userId
+   * @param {object} options
+   * @returns {Promise<Response>}
+   */
+  async fetchDiscountsForUser(userId, options) {
+    const schema = {
+      promocodeOrName: Options.stringValue(),
+      statusForUser: Options.enumValue(DiscountStatusesForUser),
+      showDisabled: Options.enumValue(ToggleValues),
+    };
+
+    return this.fetch(
+      `user/${userId}/discount/list`,
       {method: 'GET'},
       Options.create(options, this.withPagination(schema))
     );
