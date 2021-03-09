@@ -192,12 +192,12 @@ describe('BoApi', function () {
       action: () => {
         return api.fetchPersonalCodes({
           discountId: '100000000000000005',
-          uuidOrEmail: 'mail@velvica.com',
-          status: PersonalCodeStatuses.SUSPENDED,
+          promocode: 'test',
+          status: PersonalCodeStatuses.STOPPED,
         });
       },
       expected: {
-        url: 'ENDPOINT/personal_code/list?SESSID=SESSION&discount_id=100000000000000005&status=suspended',
+        url: 'ENDPOINT/discount/100000000000000005/personal_code/list?SESSID=SESSION&promocode=test&status=stopped',
         params: {method: 'GET'}
       }
     },

@@ -39,6 +39,6 @@ export const DiscountStatusesForUser = {
 /** @enum */
 export const PersonalCodeStatuses = {
   ACTIVE: 'active',
-  USED: 'used',
-  SUSPENDED: 'suspended',
+  STOPPED: 'stopped',
+  USAGE_LIMIT_REACHED: 'usage_limit_reached',
 };

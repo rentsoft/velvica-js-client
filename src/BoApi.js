@@ -257,32 +257,15 @@ export class BoApi extends AbstractApi {
    */
   async fetchPersonalCodes(options) {
     const schema = {
-      discountId: Options.stringValue(),
-      search: Options.stringValue(),
+      promocode: Options.stringValue(),
       status: Options.enumValue(PersonalCodeStatuses),
     };
 
     return this.fetch(
-      'personal_code/list',
+      `discount/${options.discountId}/personal_code/list`,
       {method: 'GET'},
       Options.create(options, this.withPagination(schema))
     );
-  }
-
-  /**
-   * @param {string} id
-   * @returns {Promise<Response>}
-   */
-  async deletePersonalCode(id) {
-    return this.fetch(`personal_code/${id}`, {method: 'DELETE'});
-  }
-
-  /**
-   * @param {string} id
-   * @returns {Promise<Response>}
-   */
-  async suspendPersonalCode(id) {
-    return this.fetch(`personal_code/${id}/suspend`, {method: 'POST'});
   }
 
   /**
@@ -293,14 +276,24 @@ export class BoApi extends AbstractApi {
     return this.fetch('personal_code', {method: 'POST', body: formData});
   }
 
-  /**
-   * @callback BoApiPerformerCallback
-   * @param {BoApi} api
-   */
-  /**
-   * @callback BoApiErrorHandlerCallback
-   *
-   * @param {Response} response
-   * @param {({error, detail}|any)} responseBody
-   */
+  async xhrQuery(url, args = {}, urlParams = {}) {
+    let {method, body} = args;
+    let query = '';
+    if (method === 'POST' && typeof body === 'object') {
+      body = Object.entries(body)
+        .map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value))
+        .join('&');
+    }
+    return this.fetch(
+      url,
+      {
+        method: method ?? 'GET',
+        body: body,
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded'
+        }
+      },
+      urlParams
+    );
+  }
 }
