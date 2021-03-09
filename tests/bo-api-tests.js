@@ -201,39 +201,16 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
-    'fetchPersonalCodes (success, no options)': {
-      action: () => {
-        return api.fetchPersonalCodes();
-      },
-      expected: {
-        url: 'ENDPOINT/personal_code/list?SESSID=SESSION',
-        params: {method: 'GET'}
-      }
-    },
     'fetchPersonalCodes (undefined option)': {
       action: () => {
         return api.fetchPersonalCodes({
           discountId: undefined,
-          search: '123'
+          promocode: '123'
         });
       },
       expected: {
-        url: 'ENDPOINT/personal_code/list?SESSID=SESSION&search=123',
+        url: 'ENDPOINT/discount/undefined/personal_code/list?SESSID=SESSION&promocode=123',
         params: {method: 'GET'}
-      }
-    },
-    'deletePersonalCode': {
-      action: () => api.deletePersonalCode('100000000000000006'),
-      expected: {
-        url: 'ENDPOINT/personal_code/100000000000000006?SESSID=SESSION',
-        params: {method: 'DELETE'}
-      }
-    },
-    'suspendPersonalCode': {
-      action: () => api.suspendPersonalCode('100000000000000007'),
-      expected: {
-        url: 'ENDPOINT/personal_code/100000000000000007/suspend?SESSID=SESSION',
-        params: {method: 'POST'}
       }
     },
     'postPersonalCode': {
