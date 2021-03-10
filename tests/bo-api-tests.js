@@ -273,6 +273,13 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'listBrSoftsByDeveloperId': {
+      action: () => api.listBrSoftsByDeveloperId('200000000000000000'),
+      expected: {
+        url: 'ENDPOINT/api/br_soft/list_by_developer_id/200000000000000000?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
     'listSoftsByBrSoftId': {
       action: () => api.listSoftsByBrSoftId('200000000000000001'),
       expected: {

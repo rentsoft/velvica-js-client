@@ -308,6 +308,14 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param {string} developerId
+   * @returns {Promise<Response>}
+   */
+  async listBrSoftsByDeveloperId(developerId) {
+    return this.fetch(`api/br_soft/list_by_developer_id/${developerId}`, {method: 'GET'});
+  }
+
+  /**
    * @param {string} brSoftId
    * @returns {Promise<Response>}
    */
