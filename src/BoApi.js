@@ -330,6 +330,14 @@ export class BoApi extends AbstractApi {
     return this.fetch(`api/subscription/list_by_br_agent_id_uuid/${brAgentId}/${uuid}`, {method: 'GET'});
   }
 
+  /**
+   * Execute xhrQuery with params and returns promise
+   *
+   * @param {string} url
+   * @param {object} args
+   * @param {object} urlParams
+   * @returns {Promise<Response>}
+   */
   async xhrQuery(url, args = {}, urlParams = {}) {
     let {method, body} = args;
     let query = '';
