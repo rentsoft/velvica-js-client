@@ -236,6 +236,55 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'listSoftGroups': {
+      action: () => api.listSoftGroups(),
+      expected: {
+        url: 'ENDPOINT/api/soft_group/list?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'listDevelopers': {
+      action: () => api.listDevelopers(),
+      expected: {
+        url: 'ENDPOINT/api/developer/list?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'listBrSoftsByDeveloperId': {
+      action: () => api.listBrSoftsByDeveloperId('200000000000000000'),
+      expected: {
+        url: 'ENDPOINT/api/br_soft/list_by_developer_id/200000000000000000?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'listSoftsByBrSoftId': {
+      action: () => api.listSoftsByBrSoftId('200000000000000001'),
+      expected: {
+        url: 'ENDPOINT/api/soft/list_by_br_soft_id/200000000000000001?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'listServicesBySoftId': {
+      action: () => api.listServicesBySoftId('200000000000000002'),
+      expected: {
+        url: 'ENDPOINT/api/service/list_by_soft_id/200000000000000002?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'listBrAgents': {
+      action: () => api.listBrAgents(),
+      expected: {
+        url: 'ENDPOINT/api/br_agent/list?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
+    'listSubscriptionsByBrAgentIdUuid': {
+      action: () => api.listSubscriptionsByBrAgentIdUuid('200000000000000003', '200000000000000004'),
+      expected: {
+        url: 'ENDPOINT/api/subscription/list_by_br_agent_id_uuid/200000000000000003/200000000000000004?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
     'xhrQuery (GET with url params)': {
       action: () => api.xhrQuery(
         'some/url/path',

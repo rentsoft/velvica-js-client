@@ -276,6 +276,60 @@ export class BoApi extends AbstractApi {
     return this.fetch('personal_code', {method: 'POST', body: formData});
   }
 
+  /**
+   * @returns {Promise<Response>}
+   */
+  async listSoftGroups() {
+    return this.fetch('api/soft_group/list', {method: 'GET'});
+  }
+
+  /**
+   * @returns {Promise<Response>}
+   */
+  async listDevelopers() {
+    return this.fetch('api/developer/list', {method: 'GET'});
+  }
+
+  /**
+   * @param {string} developerId
+   * @returns {Promise<Response>}
+   */
+  async listBrSoftsByDeveloperId(developerId) {
+    return this.fetch(`api/br_soft/list_by_developer_id/${developerId}`, {method: 'GET'});
+  }
+
+  /**
+   * @param {string} brSoftId
+   * @returns {Promise<Response>}
+   */
+  async listSoftsByBrSoftId(brSoftId) {
+    return this.fetch(`api/soft/list_by_br_soft_id/${brSoftId}`, {method: 'GET'});
+  }
+
+  /**
+   * @param {string} softId
+   * @returns {Promise<Response>}
+   */
+  async listServicesBySoftId(softId) {
+    return this.fetch(`api/service/list_by_soft_id/${softId}`, {method: 'GET'});
+  }
+
+  /**
+   * @returns {Promise<Response>}
+   */
+  async listBrAgents() {
+    return this.fetch('api/br_agent/list', {method: 'GET'});
+  }
+
+  /**
+   * @param {string} brAgentId
+   * @param {string} uuid
+   * @returns {Promise<Response>}
+   */
+  async listSubscriptionsByBrAgentIdUuid(brAgentId, uuid) {
+    return this.fetch(`api/subscription/list_by_br_agent_id_uuid/${brAgentId}/${uuid}`, {method: 'GET'});
+  }
+
   async xhrQuery(url, args = {}, urlParams = {}) {
     let {method, body} = args;
     let query = '';
@@ -296,9 +350,9 @@ export class BoApi extends AbstractApi {
   }
 
   /**
-  * @callback BoApiPerformerCallback
-  * @param {BoApi} api
-  */
+   * @callback BoApiPerformerCallback
+   * @param {BoApi} api
+   */
   /**
    * @callback BoApiErrorHandlerCallback
    *
