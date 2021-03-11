@@ -50,7 +50,12 @@ export default class AbstractApi {
         .join('&');
     }
 
-    const path = this.gluePathAndParams(`${this.endpoint}/${requestPath}`, query);
+    const path = this.gluePathAndParams(
+      requestPath.startsWith('http')
+        ? `${requestPath}`
+        : `${this.endpoint}/${requestPath}`,
+      query
+    );
     const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
     const debugPostfix = isDev ? '&debug=1' : '';
 

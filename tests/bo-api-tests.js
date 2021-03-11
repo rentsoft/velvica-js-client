@@ -192,21 +192,12 @@ describe('BoApi', function () {
       action: () => {
         return api.fetchPersonalCodes({
           discountId: '100000000000000005',
-          uuidOrEmail: 'mail@velvica.com',
-          status: PersonalCodeStatuses.SUSPENDED,
+          promocode: 'test',
+          status: PersonalCodeStatuses.STOPPED,
         });
       },
       expected: {
-        url: 'ENDPOINT/personal_code/list?SESSID=SESSION&discount_id=100000000000000005&status=suspended',
-        params: {method: 'GET'}
-      }
-    },
-    'fetchPersonalCodes (success, no options)': {
-      action: () => {
-        return api.fetchPersonalCodes();
-      },
-      expected: {
-        url: 'ENDPOINT/personal_code/list?SESSID=SESSION',
+        url: 'ENDPOINT/discount/100000000000000005/personal_code/list?SESSID=SESSION&promocode=test&status=stopped',
         params: {method: 'GET'}
       }
     },
@@ -214,26 +205,12 @@ describe('BoApi', function () {
       action: () => {
         return api.fetchPersonalCodes({
           discountId: undefined,
-          search: '123'
+          promocode: '123'
         });
       },
       expected: {
-        url: 'ENDPOINT/personal_code/list?SESSID=SESSION&search=123',
+        url: 'ENDPOINT/discount/undefined/personal_code/list?SESSID=SESSION&promocode=123',
         params: {method: 'GET'}
-      }
-    },
-    'deletePersonalCode': {
-      action: () => api.deletePersonalCode('100000000000000006'),
-      expected: {
-        url: 'ENDPOINT/personal_code/100000000000000006?SESSID=SESSION',
-        params: {method: 'DELETE'}
-      }
-    },
-    'suspendPersonalCode': {
-      action: () => api.suspendPersonalCode('100000000000000007'),
-      expected: {
-        url: 'ENDPOINT/personal_code/100000000000000007/suspend?SESSID=SESSION',
-        params: {method: 'POST'}
       }
     },
     'postPersonalCode': {
@@ -308,6 +285,47 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'xhrQuery (GET with url params)': {
+      action: () => api.xhrQuery(
+        'some/url/path',
+        {method: 'GET'},
+        {param1: '123$%,&?', param2: '321&&??/\\'}
+        ),
+      expected: {
+        url: 'ENDPOINT/some/url/path?SESSID=SESSION&param1=123%24%25%2C%26%3F&param2=321%26%26%3F%3F%2F%5C',
+        params: {method: 'GET'}
+      }
+    },
+    'xhrQuery (POST with url params and body params)': {
+      action: () => api.xhrQuery(
+        'some/url/path',
+        {method: 'POST', body: {param1: '123$%,&?', param2: '321&&??/\\'}},
+        {param3: '321'}
+      ),
+      expected: {
+        url: 'ENDPOINT/some/url/path?SESSID=SESSION&param3=321',
+        params: {
+          method: 'POST',
+          body: 'param1=123%24%25%2C%26%3F&param2=321%26%26%3F%3F%2F%5C',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+          }
+        }
+      }
+    },
+    'xhrQuery (GET with http link and url params)': {
+      action: () => api.xhrQuery(
+        'https://somedomain.com/some/url/path',
+        {method: 'GET'},
+        {param1: '321'}
+      ),
+      expected: {
+        url: 'https://somedomain.com/some/url/path?SESSID=SESSION&param1=321',
+        params: {
+          method: 'GET',
+        }
+      }
+    }
   };
 
   before(() => {
