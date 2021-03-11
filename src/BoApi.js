@@ -288,12 +288,21 @@ export class BoApi extends AbstractApi {
       url,
       {
         method: method ?? 'GET',
-        body: body,
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded'
-        }
+        ...(body) ? {body: body} : {},
+        ...(method === 'POST') ? {headers: {'Content-type': 'application/x-www-form-urlencoded'}} : {}
       },
       urlParams
     );
   }
+
+  /**
+  * @callback BoApiPerformerCallback
+  * @param {BoApi} api
+  */
+  /**
+   * @callback BoApiErrorHandlerCallback
+   *
+   * @param {Response} response
+   * @param {({error, detail}|any)} responseBody
+   */
 }

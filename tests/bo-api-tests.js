@@ -236,6 +236,47 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'xhrQuery (GET with url params)': {
+      action: () => api.xhrQuery(
+        'some/url/path',
+        {method: 'GET'},
+        {param1: '123$%,&?', param2: '321&&??/\\'}
+        ),
+      expected: {
+        url: 'ENDPOINT/some/url/path?SESSID=SESSION&param1=123%24%25%2C%26%3F&param2=321%26%26%3F%3F%2F%5C',
+        params: {method: 'GET'}
+      }
+    },
+    'xhrQuery (POST with url params and body params)': {
+      action: () => api.xhrQuery(
+        'some/url/path',
+        {method: 'POST', body: {param1: '123$%,&?', param2: '321&&??/\\'}},
+        {param3: '321'}
+      ),
+      expected: {
+        url: 'ENDPOINT/some/url/path?SESSID=SESSION&param3=321',
+        params: {
+          method: 'POST',
+          body: 'param1=123%24%25%2C%26%3F&param2=321%26%26%3F%3F%2F%5C',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+          }
+        }
+      }
+    },
+    'xhrQuery (GET with http link and url params)': {
+      action: () => api.xhrQuery(
+        'https://somedomain.com/some/url/path',
+        {method: 'GET'},
+        {param1: '321'}
+      ),
+      expected: {
+        url: 'https://somedomain.com/some/url/path?SESSID=SESSION&param1=321',
+        params: {
+          method: 'GET',
+        }
+      }
+    }
   };
 
   before(() => {
