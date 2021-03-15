@@ -138,6 +138,15 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param {string} id
+   * @returns {Promise<Response>}
+   * @todo test
+   */
+  async getBrSoft(id) {
+    return this.fetch(`br_soft/${id}`, {method: 'GET'});
+  }
+
+  /**
    * @param {object} [options]
    * @returns {Promise<Response>}
    */
@@ -152,6 +161,15 @@ export class BoApi extends AbstractApi {
       {method: 'GET'},
       Options.create(options, this.withPagination(schema))
     );
+  }
+
+  /**
+   * @param {string} id
+   * @returns {Promise<Response>}
+   * @todo test
+   */
+  async getSoft(id) {
+    return this.fetch(`soft/${id}`, {method: 'GET'});
   }
 
   /**
@@ -170,6 +188,15 @@ export class BoApi extends AbstractApi {
       {method: 'GET'},
       Options.create(options, this.withPagination(schema))
     );
+  }
+
+  /**
+   * @param {string} id
+   * @returns {Promise<Response>}
+   * @todo test
+   */
+  async getService(id) {
+    return this.fetch(`service/${id}`, {method: 'GET'});
   }
 
   /**
