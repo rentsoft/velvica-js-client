@@ -252,17 +252,18 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param discountId
    * @param {object} [options]
    * @returns {Promise<Response>}
    */
-  async fetchPersonalCodes(options) {
+  async fetchPersonalCodes(discountId, options) {
     const schema = {
       promocode: Options.stringValue(),
       status: Options.enumValue(PersonalCodeStatuses),
     };
 
     return this.fetch(
-      `discount/${options.discountId}/personal_code/list`,
+      `discount/${discountId}/personal_code/list`,
       {method: 'GET'},
       Options.create(options, this.withPagination(schema))
     );

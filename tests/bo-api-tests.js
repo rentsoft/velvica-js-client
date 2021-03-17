@@ -190,8 +190,7 @@ describe('BoApi', function () {
     },
     'fetchPersonalCodes (success)': {
       action: () => {
-        return api.fetchPersonalCodes({
-          discountId: '100000000000000005',
+        return api.fetchPersonalCodes('100000000000000005', {
           promocode: 'test',
           status: PersonalCodeStatuses.STOPPED,
         });
@@ -203,8 +202,7 @@ describe('BoApi', function () {
     },
     'fetchPersonalCodes (undefined option)': {
       action: () => {
-        return api.fetchPersonalCodes({
-          discountId: undefined,
+        return api.fetchPersonalCodes(undefined,{
           promocode: '123'
         });
       },
