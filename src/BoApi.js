@@ -350,7 +350,7 @@ export class BoApi extends AbstractApi {
     return this.fetch(
       url,
       {
-        method: method ?? 'GET',
+        method: method ? method : 'GET',
         ...(body) ? {body: body} : {},
         ...(method === 'POST') ? {headers: {'Content-type': 'application/x-www-form-urlencoded'}} : {}
       },
