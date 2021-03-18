@@ -331,6 +331,17 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param discountTargetObjId
+   * @returns {Promise<Response>}
+   */
+  async listBrSoftComponentsApplicableForDiscountTarget(discountTargetObjId) {
+    return this.fetch(
+      `api/br_soft_component/list_applicable_for_discount_target/${discountTargetObjId}`,
+      {method: 'GET'}
+    );
+  }
+
+  /**
    * Execute xhrQuery with params and returns promise
    *
    * @param {string} url
