@@ -285,6 +285,13 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'listBrSoftComponentsApplicableForDiscountTarget': {
+      action: () => api.listBrSoftComponentsApplicableForDiscountTarget('200000000000000005'),
+      expected: {
+        url: 'ENDPOINT/api/br_soft_component/list_applicable_for_discount_target/200000000000000005?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
     'xhrQuery (GET with url params)': {
       action: () => api.xhrQuery(
         'some/url/path',
