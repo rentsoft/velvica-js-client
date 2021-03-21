@@ -227,20 +227,12 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param {string|null} id
    * @param {object} formData
    * @returns {Promise<Response>}
    */
-  async postDiscount(formData) {
-    return this.fetch('discount', {method: 'POST', body: formData});
-  }
-
-  /**
-   * @param {string} id
-   * @param {object} formData
-   * @returns {Promise<Response>}
-   */
-  async patchDiscount(id, formData) {
-    return this.fetch(`discount/${id}`, {method: 'PATCH', body: formData});
+  async postDiscount(id = null, formData) {
+    return this.fetchPost('discount', id, formData);
   }
 
   /**
@@ -269,11 +261,12 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param {string|null} id
    * @param {object} formData
    * @returns {Promise<Response>}
    */
-  async postPersonalCode(formData) {
-    return this.fetch('personal_code', {method: 'POST', body: formData});
+  async postPersonalCode(id, formData) {
+    return this.fetchPost('personal_code', id, formData);
   }
 
   /**
@@ -366,6 +359,18 @@ export class BoApi extends AbstractApi {
       },
       urlParams
     );
+  }
+
+  /**
+   * @private
+   * @param modelName
+   * @param id
+   * @param formData
+   * @returns {Promise<Response>}
+   */
+  fetchPost(modelName, id, formData) {
+    const idString = id ? id : 'new';
+    return this.fetch(`${modelName}/${idString}`, {method: 'POST', body: formData});
   }
 
   /**
