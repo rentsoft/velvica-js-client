@@ -153,10 +153,10 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
-    'postDiscount': {
-      action: () => api.postDiscount({ discount: '12345' }),
+    'postDiscount (new)': {
+      action: () => api.postDiscount(null, { discount: '12345' }),
       expected: {
-        url: 'ENDPOINT/discount?SESSID=SESSION',
+        url: 'ENDPOINT/discount/new?SESSID=SESSION',
         params: {
           method: 'POST',
           body: {
@@ -165,14 +165,14 @@ describe('BoApi', function () {
         }
       }
     },
-    'patchDiscount': {
-      action: () => api.patchDiscount('100000000000000003', { discount: '890' }),
+    'postDiscount (existing ID)': {
+      action: () => api.postDiscount('100000000000000003', { discount: '12345' }),
       expected: {
         url: 'ENDPOINT/discount/100000000000000003?SESSID=SESSION',
         params: {
-          method: 'PATCH',
+          method: 'POST',
           body: {
-            discount: '890'
+            discount: '12345'
           },
         }
       }
@@ -213,10 +213,22 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
-    'postPersonalCode': {
-      action: () => api.postPersonalCode({ code: 'supercode' }),
+    'postPersonalCode (new)': {
+      action: () => api.postPersonalCode(null, { code: 'supercode' }),
       expected: {
-        url: 'ENDPOINT/personal_code?SESSID=SESSION',
+        url: 'ENDPOINT/personal_code/new?SESSID=SESSION',
+        params: {
+          method: 'POST',
+          body: {
+            code: 'supercode'
+          },
+        }
+      }
+    },
+    'postPersonalCode (existing ID)': {
+      action: () => api.postPersonalCode('100000000000000000', { code: 'supercode' }),
+      expected: {
+        url: 'ENDPOINT/personal_code/100000000000000000?SESSID=SESSION',
         params: {
           method: 'POST',
           body: {
