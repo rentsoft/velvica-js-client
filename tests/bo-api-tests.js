@@ -344,6 +344,70 @@ describe('BoApi', function () {
           method: 'GET',
         }
       }
+    },
+    'fetchExistingSubscriptionDiscountInfo (success)': {
+      action: () => api.fetchExistingSubscriptionDiscountInfo(
+        '111',
+        {somefield: 'somevalue'},
+        [{
+          value: 0.5,
+          is_percent: true,
+          charge_rule: 'every_nth',
+          charge_number: 2
+        }],
+        [1,2,3]
+      ),
+      expected: {
+        url: 'ENDPOINT/api/discount/existing_subscription/info?SESSID=SESSION',
+        params: {
+          method: 'POST',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({
+            subscriptionId: '111',
+            discount: {somefield: 'somevalue'},
+            discountCharges: [{
+              value: 0.5,
+              is_percent: true,
+              charge_rule: 'every_nth',
+              charge_number: 2
+            }],
+            chargeNums: [1,2,3]
+          })
+        }
+      }
+    },
+    'fetchNewSubscriptionDiscountInfo (success)': {
+      action: () => api.fetchNewSubscriptionDiscountInfo(
+        '111',
+        '222',
+        {somefield: 'somevalue'},
+        [{
+          value: 0.5,
+          is_percent: true,
+          charge_rule: 'every_nth',
+          charge_number: 2
+        }],
+        [1,2,3]
+      ),
+      expected: {
+        url: 'ENDPOINT/api/discount/new_subscription/info?SESSID=SESSION',
+        params: {
+          method: 'POST',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({
+            serviceId: '111',
+            brAgentUserId: '222',
+            discount: {somefield: 'somevalue'},
+            discountCharges: [{
+              value: 0.5,
+              is_percent: true,
+              charge_rule: 'every_nth',
+              charge_number: 2
+            }],
+            chargeNums: [1,2,3]
+          })
+        }
+      }
     }
   };
 

@@ -362,6 +362,60 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * Fetch discount info for existing subscriptions with new discount
+   *
+   * @param {string} subscriptionId
+   * @param {object} discount
+   * @param {array<object>} discountCharges
+   * @param {array<int>} chargeNums
+   * @returns {Promise<Response>}
+   */
+  async fetchExistingSubscriptionDiscountInfo(subscriptionId, discount, discountCharges, chargeNums) {
+    return this.fetch(
+      'api/discount/existing_subscription/info',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          subscriptionId,
+          discount,
+          discountCharges,
+          chargeNums
+        }),
+        headers: {'Content-type': 'application/json'}
+      }
+    );
+  }
+
+  /**
+   * Fetch discount info for new subscription with new discount
+   *
+   * @param {string} serviceId
+   * @param {string} brAgentUserId
+   * @param {object} discount
+   * @param {array<object>} discountCharges
+   * @param {array<int>} chargeNums
+   * @param {object|null} vals
+   * @returns {Promise<Response>}
+   */
+  async fetchNewSubscriptionDiscountInfo(serviceId, brAgentUserId, discount, discountCharges, chargeNums, vals) {
+    return this.fetch(
+      'api/discount/new_subscription/info',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          serviceId,
+          brAgentUserId,
+          discount,
+          discountCharges,
+          chargeNums,
+          vals
+        }),
+        headers: {'Content-type': 'application/json'}
+      }
+    );
+  }
+
+  /**
    * @private
    * @param modelName
    * @param id
