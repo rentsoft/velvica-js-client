@@ -283,8 +283,8 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
-    'listServicesBySoftIdScopeObjId': {
-      action: () => api.listServicesBySoftIdScopeObjId('200000000000000002', '200000000000000003'),
+    'listServicesBySoftDiscountScopeObjId': {
+      action: () => api.listServicesBySoftIdDiscountScopeObjId('200000000000000002', '200000000000000003'),
       expected: {
         url: 'ENDPOINT/api/service/list_by_soft_id_scope_obj_id/200000000000000002/200000000000000003?SESSID=SESSION',
         params: {method: 'GET'}

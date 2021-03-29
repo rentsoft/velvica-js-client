@@ -312,7 +312,7 @@ export class BoApi extends AbstractApi {
    * @param {string} scopeObjId
    * @returns {Promise<Response>}
    */
-  async listServicesBySoftIdScopeObjId(softId, scopeObjId) {
+  async listServicesBySoftIdDiscountScopeObjId(softId, scopeObjId) {
     return this.fetch(`api/service/list_by_soft_id_scope_obj_id/${softId}/${scopeObjId}`, {method: 'GET'});
   }
 
