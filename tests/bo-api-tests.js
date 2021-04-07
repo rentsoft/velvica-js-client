@@ -184,6 +184,13 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
+    'getNewPersonalCodeData': {
+      action: () => api.getNewPersonalCodeData('100000000000000001'),
+      expected: {
+        url: 'ENDPOINT/discount/100000000000000001/personal_code/new?SESSID=SESSION',
+        params: {method: 'GET'}
+      }
+    },
     'fetchPersonalCodes (error)': {
       action: () => api.fetchPersonalCodes({ status: 'random' }),
       error: 'Failed to validate: status is invalid.'
@@ -214,9 +221,9 @@ describe('BoApi', function () {
       }
     },
     'postPersonalCode (new)': {
-      action: () => api.postPersonalCode(null, { code: 'supercode' }),
+      action: () => api.postPersonalCode('100000000000000001', null, { code: 'supercode' }),
       expected: {
-        url: 'ENDPOINT/personal_code/new?SESSID=SESSION',
+        url: 'ENDPOINT/discount/100000000000000001/personal_code/new?SESSID=SESSION',
         params: {
           method: 'POST',
           body: {
@@ -226,9 +233,9 @@ describe('BoApi', function () {
       }
     },
     'postPersonalCode (existing ID)': {
-      action: () => api.postPersonalCode('100000000000000000', { code: 'supercode' }),
+      action: () => api.postPersonalCode('100000000000000001', '100000000000000002', { code: 'supercode' }),
       expected: {
-        url: 'ENDPOINT/personal_code/100000000000000000?SESSID=SESSION',
+        url: 'ENDPOINT/discount/100000000000000001/personal_code/100000000000000002?SESSID=SESSION',
         params: {
           method: 'POST',
           body: {
