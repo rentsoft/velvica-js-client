@@ -244,6 +244,16 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * Gets data for model form: title and breadcrumbs, various other data, etc.
+   *
+   * @param {string} discountId
+   * @returns {Promise<Response>}
+   */
+  async getNewPersonalCodeData(discountId) {
+    return this.fetch(`discount/${discountId}/personal_code/new`, {method: 'GET'});
+  }
+
+  /**
    * @param {object} [options]
    * @returns {Promise<Response>}
    */
@@ -261,12 +271,13 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @param {string} discountId
    * @param {string|null} id
    * @param {object} formData
    * @returns {Promise<Response>}
    */
-  async postPersonalCode(id, formData) {
-    return this.fetchPost('personal_code', id, formData);
+  async postPersonalCode(discountId, id, formData) {
+    return this.fetchPost(`discount/${discountId}/personal_code`, id, formData);
   }
 
   /**
