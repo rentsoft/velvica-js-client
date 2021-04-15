@@ -249,7 +249,7 @@ export class BoApi extends AbstractApi {
    * @param {string} discountId
    * @returns {Promise<Response>}
    */
-  getNewPersonalCodeData(discountId) {
+  async getNewPersonalCodeData(discountId) {
     return this.fetch(`discount/${discountId}/personal_code/new`, {method: 'GET'});
   }
 
