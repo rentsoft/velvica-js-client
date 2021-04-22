@@ -18,7 +18,7 @@ export default class Fetcher {
     };
 
     try {
-      fetchResult = await fetch(url, params);
+      fetchResult = await fetch(url, {...params, ...(this.controller ? {signal: this.controller.signal} : {})});
       responseJson = await fetchResult.json();
     } catch (err) {
       if (this.connectionFailedHandler !== undefined) {
@@ -40,6 +40,10 @@ export default class Fetcher {
    */
   setErrorHandler(errorHandler) {
     this.errorHandler = errorHandler;
+  }
+
+  setController(controller) {
+    this.controller = controller;
   }
 
   /**
