@@ -298,9 +298,9 @@ describe('BoApi', function () {
       }
     },
     'listBrAgents': {
-      action: () => api.listBrAgents(),
+      action: () => api.listTenantBrAgents(),
       expected: {
-        url: 'ENDPOINT/api/br_agent/list?SESSID=SESSION',
+        url: 'ENDPOINT/api/br_agent/list_tenant?SESSID=SESSION',
         params: {method: 'GET'}
       }
     },
