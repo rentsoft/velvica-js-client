@@ -335,6 +335,13 @@ export class BoApi extends AbstractApi {
   }
 
   /**
+   * @returns {Promise<Response>}
+   */
+  async listTenantBrAgents() {
+    return this.fetch('api/br_agent/list_tenant', {method: 'GET'});
+  }
+
+  /**
    * @param {string} brAgentId
    * @param {string} uuid
    * @returns {Promise<Response>}
