@@ -346,8 +346,8 @@ export class BoApi extends AbstractApi {
    * @param {string} uuid
    * @returns {Promise<Response>}
    */
-  async listSubscriptionsByBrAgentIdUuid(brAgentId, uuid) {
-    return this.fetch(`api/subscription/list_by_br_agent_id_uuid/${brAgentId}/${uuid}`, {method: 'GET'});
+  async listSubscriptionsByBrAgentIdUuidForDiscount(brAgentId, uuid) {
+    return this.fetch(`api/subscription/list_by_br_agent_id_uuid_for_discount/${brAgentId}/${uuid}`, {method: 'GET'});
   }
 
   /**

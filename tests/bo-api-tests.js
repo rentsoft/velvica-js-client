@@ -304,10 +304,10 @@ describe('BoApi', function () {
         params: {method: 'GET'}
       }
     },
-    'listSubscriptionsByBrAgentIdUuid': {
-      action: () => api.listSubscriptionsByBrAgentIdUuid('200000000000000003', '200000000000000004'),
+    'listSubscriptionsByBrAgentIdUuidForDiscount': {
+      action: () => api.listSubscriptionsByBrAgentIdUuidForDiscount('200000000000000003', '200000000000000004'),
       expected: {
-        url: 'ENDPOINT/api/subscription/list_by_br_agent_id_uuid/200000000000000003/200000000000000004?SESSID=SESSION',
+        url: 'ENDPOINT/api/subscription/list_by_br_agent_id_uuid_for_discount/200000000000000003/200000000000000004?SESSID=SESSION',
         params: {method: 'GET'}
       }
     },
