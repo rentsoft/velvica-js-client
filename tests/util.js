@@ -1,6 +1,5 @@
 import FormData from 'formdata-node';
 import {before, it} from "mocha";
-import {BoApi} from "../src";
 import {expect} from "chai";
 global.FormData = FormData;
 
