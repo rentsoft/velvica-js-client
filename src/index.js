@@ -4,6 +4,7 @@ import {PartnerApi} from "./PartnerApi";
 import {AgentTypes, DiscountStatuses, DiscountStatusesForUser, PersonalCodeStatuses, ServerStatuses} from "./enum";
 import Fetcher from "./util/Fetcher";
 import Options from "./util/Options";
+import {launchTests} from "../tests/util";
 
 export {
   AbstractApi,
@@ -18,4 +19,5 @@ export {
   PersonalCodeStatuses,
   Fetcher,
   Options,
+  launchTests,
 };
