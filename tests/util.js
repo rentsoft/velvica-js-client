@@ -1,9 +1,11 @@
 // In CommonJS so that Mocha works easily
 // with these when used as a dependency in other repositories.
 
-const FormData = require('formdata-node');
+const {FormData} = require('formdata-node');
 const {before, it} = require('mocha');
 const {expect} = require('chai');
+
+global.FormData = FormData;
 
 const createFetcherStub = () => {
   return {
@@ -25,7 +27,6 @@ const createFetcherStub = () => {
 };
 
 const launchTests = (apiMaker, replacements, tests) => {
-  global.FormData = FormData;
   let api = null;
 
   before(() => {
