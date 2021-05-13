@@ -1,7 +1,6 @@
 import FormData from 'formdata-node';
 import {before, it} from "mocha";
 import {expect} from "chai";
-global.FormData = FormData;
 
 export const createFetcherStub = () => {
   return {
@@ -23,6 +22,7 @@ export const createFetcherStub = () => {
 };
 
 export const launchTests = (apiMaker, replacements, tests) => {
+  global.FormData = FormData;
   let api = null;
 
   before(() => {
