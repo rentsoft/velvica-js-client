@@ -1,8 +1,11 @@
-import FormData from 'formdata-node';
-import {before, it} from "mocha";
-import {expect} from "chai";
+// In CommonJS so that Mocha works easily
+// with these when used as a dependency in other repositories.
 
-export const createFetcherStub = () => {
+const FormData = require('formdata-node');
+const {before, it} = require('mocha');
+const {expect} = require('chai');
+
+const createFetcherStub = () => {
   return {
     async fetch(url, params) {
       if (params.body instanceof FormData) {
@@ -21,7 +24,7 @@ export const createFetcherStub = () => {
   };
 };
 
-export const launchTests = (apiMaker, replacements, tests) => {
+const launchTests = (apiMaker, replacements, tests) => {
   global.FormData = FormData;
   let api = null;
 
@@ -51,4 +54,9 @@ export const launchTests = (apiMaker, replacements, tests) => {
       }
     });
   });
+};
+
+module.exports = {
+  createFetcherStub,
+  launchTests
 };
