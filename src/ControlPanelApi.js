@@ -1,4 +1,4 @@
-import AbstractApi from "./AbstractApi";
+import {AbstractApi} from "./AbstractApi";
 import Fetcher from "./util/Fetcher";
 
 /**

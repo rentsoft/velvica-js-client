@@ -1,6 +1,6 @@
 import Fetcher from "./util/Fetcher";
 
-export default class AbstractApi {
+export class AbstractApi {
   /**
    * @param {string} endpoint
    * @param {Fetcher} fetcher
