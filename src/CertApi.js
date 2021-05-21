@@ -16,9 +16,9 @@ export class CertApi extends AbstractApi {
     if (clientId !== '') {
       fetcher.useOauthParams({
         endpoint: endpoint + '/oauth',
-        clientId: clientId,
-        clientSecret: clientSecret,
-        grantType: "client_credentials"
+        clientId,
+        clientSecret,
+        grantType: 'client_credentials'
       })
     }
     super(endpoint, fetcher);
@@ -46,32 +46,32 @@ export class CertApi extends AbstractApi {
   }
 
   async certInfo(cert, email, verificationCode) {
-    return await this.fetch(`cert/info`,
+    return await this.fetch('cert/info',
+      {
+        method: 'POST',
+        body:  JSON.stringify(
         {
-          method: 'POST',
-          body:  JSON.stringify(
-          {
-              cert,
-              email,
-              verificationCode,
-            }
-          )
-        }
+            cert,
+            email,
+            verificationCode,
+          }
+        )
+      }
     );
   }
 
   async certActivate(cert, email, verificationCode) {
-    return await this.fetch(`cert/activate`,
-        {
-          method: 'POST',
-          body:  JSON.stringify(
-              {
-                cert,
-                email,
-                verificationCode,
-              }
-          )
-        }
+    return await this.fetch('cert/activate',
+      {
+        method: 'POST',
+        body:  JSON.stringify(
+          {
+            cert,
+            email,
+            verificationCode,
+          }
+        )
+      }
     );
   }
 }
