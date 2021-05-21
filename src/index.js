@@ -1,15 +1,17 @@
 import {AbstractApi} from "./AbstractApi";
+import {CertApi} from "./CertApi";
 import {ControlPanelApi, VPSLogFilter, VPSStateChange} from "./ControlPanelApi";
-import {PartnerApi} from "./PartnerApi";
 import Fetcher from "./util/Fetcher";
 import Options from "./util/Options";
+import {PartnerApi} from "./PartnerApi";
 
 export {
   AbstractApi,
+  CertApi,
   ControlPanelApi,
-  VPSLogFilter,
-  VPSStateChange,
-  PartnerApi,
   Fetcher,
   Options,
+  PartnerApi,
+  VPSLogFilter,
+  VPSStateChange,
 };

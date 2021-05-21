@@ -29,13 +29,12 @@
     "@types/chai": "^4.2.0",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
-    "chai-fetch-mock": "^2.0.0",
     "fetch-mock": "^9.10.6",
     "formdata-node": "^3.3.1",
+    "husky": "^4.3.0",
     "mocha": "^8.1.0",
     "node-fetch": "^2.6.0",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "husky": "^4.3.0"
+    "webpack-cli": "^3.3.12"
   }
 }
