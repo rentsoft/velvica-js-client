@@ -45,7 +45,7 @@ export class CertApi extends AbstractApi {
     return super.withErrorHandling(performer, errorHandler);
   }
 
-  async certInfo(cert, email, verificationCode) {
+  async fetchCertInfo(cert, email, verificationCode) {
     return await this.fetch('cert/info',
       {
         method: 'POST',
@@ -60,7 +60,7 @@ export class CertApi extends AbstractApi {
     );
   }
 
-  async certActivate(cert, email, verificationCode) {
+  async activateCert(cert, email, verificationCode) {
     return await this.fetch('cert/activate',
       {
         method: 'POST',
