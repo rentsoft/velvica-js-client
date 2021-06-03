@@ -1,10 +1,7 @@
-import {describe, it, before, after} from "mocha";
-import chai, {expect} from 'chai';
+import {after, before, describe, it} from "mocha";
+import {expect} from 'chai';
 import Fetcher from "../src/util/Fetcher";
-import chaiFetchMock from 'chai-fetch-mock';
-import fetchMock from 'fetch-mock';
-
-chai.use(chaiFetchMock);
+import fetchMock from 'fetch-mock'
 
 const SUCCESS_ROUTE = '/ok';
 const SUCCESS_BODY = {foo: 'bar'};
@@ -22,7 +19,23 @@ describe('Fetcher', function () {
 
   before(
     () => {
-      fetchMock.get(
+      fetcher = new Fetcher();
+      fetcher.setErrorHandler(
+        (response, {error, detail}) => {
+          const errorInstance = new Error(`${response.status}: ${error}`);
+          errorInstance.detail = detail;
+          throw errorInstance;
+        }
+      );
+      fetcher.setConnectionFailedHandler(
+        (error) => {
+          throw new Error(`Connection error: ${error}`);
+        }
+      );
+
+      let fetcherMock = fetchMock.sandbox();
+
+      fetcherMock.get(
         SUCCESS_ROUTE,
         {
           status: 200,
@@ -32,8 +45,7 @@ describe('Fetcher', function () {
           headers: { Accept: 'application/json' }
         }
       );
-
-      fetchMock.get(
+      fetcherMock.get(
         ERROR_ROUTE,
         {
           status: ERROR_CODE,
@@ -43,8 +55,7 @@ describe('Fetcher', function () {
           headers: { Accept: 'application/json' }
         }
       );
-
-      fetchMock.get(
+      fetcherMock.get(
         CONNECTION_FAILURE_ROUTE,
         {
           throws: CONNECTION_FAILURE_ERROR
@@ -54,21 +65,7 @@ describe('Fetcher', function () {
         }
       );
 
-      fetcher = new Fetcher();
-
-      fetcher.setErrorHandler(
-        (response, {error, detail}) => {
-          const errorInstance = new Error(`${response.status}: ${error}`);
-          errorInstance.detail = detail;
-          throw errorInstance;
-        }
-      );
-
-      fetcher.setConnectionFailedHandler(
-        (error) => {
-          throw new Error(`Connection error: ${error}`);
-        }
-      );
+      fetcher.setFetcher(fetcherMock);
     }
   );
 
@@ -78,7 +75,8 @@ describe('Fetcher', function () {
     fetcher.fetch(SUCCESS_ROUTE).then((result) => {
       hadError = false;
       expect(result).to.be.deep.equal(SUCCESS_BODY);
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err);
       hadError = true;
     });
 

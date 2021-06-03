@@ -1,7 +1,12 @@
+import fetch from 'node-fetch';
+
 export default class Fetcher {
   constructor() {
     this.errorHandler = undefined;
     this.connectionFailedHandler = undefined;
+    this.oauthParams = undefined;
+    this.bearerToken = undefined;
+    this.fetcher = fetch;
   }
 
   async fetch(url, params) {
@@ -17,8 +22,16 @@ export default class Fetcher {
       },
     };
 
+    if (this.oauthParams !== undefined && this.bearerToken === undefined) {
+      this.bearerToken = await this.getNewBearerToken();
+    }
+
+    if (this.bearerToken !== undefined) {
+      params.headers.Authorization = `Bearer ${this.bearerToken}`;
+    }
+
     try {
-      fetchResult = await fetch(url, {...params, ...(this.controller ? {signal: this.controller.signal} : {})});
+      fetchResult = await this.fetcher(url, {...params, ...(this.controller ? {signal: this.controller.signal} : {})});
       responseJson = await fetchResult.json();
     } catch (err) {
       if (this.connectionFailedHandler !== undefined) {
@@ -53,8 +66,31 @@ export default class Fetcher {
     this.connectionFailedHandler = connectionFailedHandler;
   }
 
-  /**
-   * @callback ConnectionFailedHandlerCallback
-   * @param {Error} error
-   */
+  useOauthParams(oauthParams) {
+    this.oauthParams = oauthParams;
+  }
+
+  async getNewBearerToken() {
+    const fetchResult = await this.fetcher(
+      this.oauthParams.endpoint,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+          client_id: this.oauthParams.clientId,
+          client_secret: this.oauthParams.clientSecret,
+          grant_type: this.oauthParams.grantType,
+        })
+      }
+    );
+    const responseJson = await fetchResult.json();
+
+    return responseJson.access_token;
+  }
+
+  setFetcher(fetcher) {
+    this.fetcher = fetcher;
+  }
 }
