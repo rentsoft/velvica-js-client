@@ -1,5 +1,6 @@
 import {AbstractApi} from "./AbstractApi";
 import Fetcher from "./util/Fetcher";
+import * as FormData from "form-data"
 
 export class CertApi extends AbstractApi {
   /**
@@ -46,31 +47,37 @@ export class CertApi extends AbstractApi {
   }
 
   async fetchCertInfo(cert, email, verificationCode) {
-    return await this.fetch('cert/info',
+    const formData = new FormData();
+    formData.append('cert_value', cert);
+    if (email !== undefined) {
+      formData.append('cert_email', email);
+    }
+    if (verificationCode !== undefined) {
+      formData.append('cert_email_verification_code', verificationCode);
+    }
+
+    return await this.fetch('v1/cert/info',
       {
         method: 'POST',
-        body:  JSON.stringify(
-        {
-            cert,
-            email,
-            verificationCode,
-          }
-        )
+        body: formData
       }
     );
   }
 
   async activateCert(cert, email, verificationCode) {
-    return await this.fetch('cert/activate',
+    const formData = new FormData();
+    formData.append('cert_value', cert);
+    if (email !== undefined) {
+      formData.append('cert_email', email);
+    }
+    if (verificationCode !== undefined) {
+      formData.append('cert_email_verification_code', verificationCode);
+    }
+
+    return await this.fetch('v1/cert/activate',
       {
         method: 'POST',
-        body:  JSON.stringify(
-          {
-            cert,
-            email,
-            verificationCode,
-          }
-        )
+        body: formData
       }
     );
   }

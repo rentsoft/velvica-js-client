@@ -1,17 +1,17 @@
-import {describe, it, before, after} from "mocha";
-import chai, {expect} from 'chai';
+import {after, before, describe, it} from "mocha";
+import {expect} from 'chai';
 import Fetcher from "../src/util/Fetcher";
-import fetchMock from 'fetch-mock';
+import fetchMock from 'fetch-mock'
 
-const SUCCESS_ROUTE = 'ok';
+const SUCCESS_ROUTE = '/ok';
 const SUCCESS_BODY = {foo: 'bar'};
 
-const ERROR_ROUTE = 'error';
+const ERROR_ROUTE = '/error';
 const ERROR_NAME = 'ERR_SALES_CHANNEL_FORBIDDEN';
 const ERROR_DETAIL = 'Access denied to sales channel.';
 const ERROR_CODE = 400;
 
-const CONNECTION_FAILURE_ROUTE = 'disconnect';
+const CONNECTION_FAILURE_ROUTE = '/disconnect';
 const CONNECTION_FAILURE_ERROR = 'Oh noes!';
 
 describe('Fetcher', function () {
@@ -20,7 +20,6 @@ describe('Fetcher', function () {
   before(
     () => {
       fetcher = new Fetcher();
-
       fetcher.setErrorHandler(
         (response, {error, detail}) => {
           const errorInstance = new Error(`${response.status}: ${error}`);
@@ -28,33 +27,56 @@ describe('Fetcher', function () {
           throw errorInstance;
         }
       );
-
       fetcher.setConnectionFailedHandler(
         (error) => {
           throw new Error(`Connection error: ${error}`);
         }
       );
+
+      let fetcherMock = fetchMock.sandbox();
+
+      fetcherMock.get(
+        SUCCESS_ROUTE,
+        {
+          status: 200,
+          body: SUCCESS_BODY
+        },
+        {
+          headers: { Accept: 'application/json' }
+        }
+      );
+      fetcherMock.get(
+        ERROR_ROUTE,
+        {
+          status: ERROR_CODE,
+          body: {error: ERROR_NAME, detail: ERROR_DETAIL},
+        },
+        {
+          headers: { Accept: 'application/json' }
+        }
+      );
+      fetcherMock.get(
+        CONNECTION_FAILURE_ROUTE,
+        {
+          throws: CONNECTION_FAILURE_ERROR
+        },
+        {
+          headers: { Accept: 'application/json' }
+        }
+      );
+
+      fetcher.setFetcher(fetcherMock);
     }
   );
 
   it('should handle OK responses', function () {
-    fetchMock.get(
-      SUCCESS_ROUTE,
-      {
-        status: 200,
-        body: SUCCESS_BODY
-      },
-      {
-        headers: { Accept: 'application/json' }
-      }
-    );
-
     let hadError = null;
 
     fetcher.fetch(SUCCESS_ROUTE).then((result) => {
       hadError = false;
       expect(result).to.be.deep.equal(SUCCESS_BODY);
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err);
       hadError = true;
     });
 
@@ -62,17 +84,6 @@ describe('Fetcher', function () {
   });
 
   it('should handle erroneous responses', function (done) {
-    fetchMock.get(
-      ERROR_ROUTE,
-      {
-        status: ERROR_CODE,
-        body: {error: ERROR_NAME, detail: ERROR_DETAIL},
-      },
-      {
-        headers: { Accept: 'application/json' }
-      }
-    );
-
     fetcher.fetch(ERROR_ROUTE).catch(err => {
       // It was previously set up above to throw exceptions like that.
       expect(err.message).to.equal(`${ERROR_CODE}: ${ERROR_NAME}`);
@@ -82,16 +93,6 @@ describe('Fetcher', function () {
   });
 
   it('should handle connection failures', function (done) {
-    fetchMock.get(
-      CONNECTION_FAILURE_ROUTE,
-      {
-        throws: CONNECTION_FAILURE_ERROR
-      },
-      {
-        headers: { Accept: 'application/json' }
-      }
-    );
-
     fetcher.fetch(CONNECTION_FAILURE_ROUTE).catch(err => {
       // "Handled: " is added above. Just for test reasons.
       expect(err.message).to.equal(`Connection error: ${CONNECTION_FAILURE_ERROR}`);

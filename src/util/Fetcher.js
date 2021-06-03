@@ -6,6 +6,7 @@ export default class Fetcher {
     this.connectionFailedHandler = undefined;
     this.oauthParams = undefined;
     this.bearerToken = undefined;
+    this.fetcher = fetch;
   }
 
   async fetch(url, params) {
@@ -23,11 +24,14 @@ export default class Fetcher {
 
     if (this.oauthParams !== undefined && this.bearerToken === undefined) {
       this.bearerToken = await this.getNewBearerToken();
-      params.headers.Authorization = `Bearer: ${this.bearerToken}`;
+    }
+
+    if (this.bearerToken !== undefined) {
+      params.headers.Authorization = `Bearer ${this.bearerToken}`;
     }
 
     try {
-      fetchResult = await fetch(url, {...params, ...(this.controller ? {signal: this.controller.signal} : {})});
+      fetchResult = await this.fetcher(url, {...params, ...(this.controller ? {signal: this.controller.signal} : {})});
       responseJson = await fetchResult.json();
     } catch (err) {
       if (this.connectionFailedHandler !== undefined) {
@@ -67,7 +71,7 @@ export default class Fetcher {
   }
 
   async getNewBearerToken() {
-    const fetchResult = await fetch(
+    const fetchResult = await this.fetcher(
       this.oauthParams.endpoint,
       {
         method: 'POST',
@@ -84,5 +88,9 @@ export default class Fetcher {
     const responseJson = await fetchResult.json();
 
     return responseJson.access_token;
+  }
+
+  setFetcher(fetcher) {
+    this.fetcher = fetcher;
   }
 }
